@@ -1,0 +1,21 @@
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.ml {
+  margin-left: 10px;
+}

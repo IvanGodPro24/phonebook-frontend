@@ -1,0 +1,12 @@
+.notfound {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+
+    margin-top: 3rem;
+}
+
+.title {
+    font-size: 3rem;
+}

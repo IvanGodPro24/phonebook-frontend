@@ -1,0 +1,4 @@
+.navlist {
+  display: flex;
+  gap: 1rem;
+}
