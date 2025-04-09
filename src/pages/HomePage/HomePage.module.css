@@ -1,14 +1,18 @@
-.title {
-  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
-  background: linear-gradient(90deg, #4facfe, #00f2fe);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  padding-top: 20rem;
-  padding-bottom: 20rem;
+.container {
+  position: relative;
 }
 
-.container {
-  background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
+.title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  font-size: 6rem;
+  font-weight: 900;
+  min-width: 800px;
+
+  z-index: 0;
+
+  color: rgb(34, 34, 34);
 }
