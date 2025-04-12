@@ -11,8 +11,8 @@ import { selectIsRefreshing } from "./redux/auth/selectors";
 import { refresh } from "./redux/auth/operations";
 
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
-const RegistrationPage = lazy(() =>
-  import("./pages/RegistrationPage/RegistrationPage")
+const RegistrationPage = lazy(
+  () => import("./pages/RegistrationPage/RegistrationPage")
 );
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
 const ContactsPage = lazy(() => import("./pages/ContactsPage/ContactsPage"));
@@ -22,9 +22,12 @@ function App() {
   const dispatch = useAppDispatch();
   const isRefreshing = useAppSelector(selectIsRefreshing);
 
-  useEffect(() => {
+useEffect(() => {
+  const hasSession = localStorage.getItem("hasSession");
+  if (hasSession === "true") {
     dispatch(refresh());
-  }, [dispatch]);
+  }
+}, [dispatch]);
 
   return isRefreshing ? (
     <Loader />
@@ -36,15 +39,7 @@ function App() {
         <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route
-              path="/register"
-              element={
-                <RestrictedRoute
-                  component={<RegistrationPage />}
-                  redirectTo="/contacts"
-                />
-              }
-            />
+            <Route path="/register" element={<RegistrationPage />} />
             <Route
               path="/login"
               element={

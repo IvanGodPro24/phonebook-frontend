@@ -1,4 +1,4 @@
-The **Phonebook** app is a user-friendly contact book that allows users to store, edit, delete, and filter contacts. The project is built using **React** on the frontend and works with a backend API.
+# The **Phonebook** app is a user-friendly contact book that allows users to store, edit, delete, and filter contacts. The project is built using **React** on the frontend and works with a backend API.
 
 ## 🚀 Features
 

@@ -1,7 +1,20 @@
 export type Contact = {
-  id: string;
+  _id: string;
   name: string;
-  number: string;
+  phoneNumber: string;
+  contactType: string;
+};
+
+export type ContactHandle = {
+  _id: string;
+  name: string;
+  phoneNumber: string;
+};
+
+export type ContactPost = {
+  name: string;
+  phoneNumber: string;
+  contactType: string;
 };
 
 export type ContactState = {

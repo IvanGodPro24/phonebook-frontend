@@ -1,6 +1,5 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { RootState } from "../store.types";
 import {
   AuthState,
   LoginCredentials,
@@ -8,7 +7,8 @@ import {
   User,
 } from "./auth.types";
 
-axios.defaults.baseURL = "https://connections-api.goit.global";
+axios.defaults.baseURL = "https://phonebook-backend-n8t6.onrender.com";
+axios.defaults.withCredentials = true
 
 const setAuthHeader = (token: string) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -19,14 +19,13 @@ const clearAuthHeader = () => {
 };
 
 export const register = createAsyncThunk<
-  AuthState,
+  User,
   RegisterCredentials,
   { rejectValue: string }
 >("auth/register", async (user, { rejectWithValue }) => {
   try {
-    const response = await axios.post("/users/signup", user);
+    const response = await axios.post("/auth/register", user);
 
-    setAuthHeader(response.data.token);
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.message);
@@ -39,9 +38,11 @@ export const login = createAsyncThunk<
   { rejectValue: string }
 >("auth/login", async (user, { rejectWithValue }) => {
   try {
-    const response = await axios.post("/users/login", user);
+    const response = await axios.post("/auth/login", user);
 
-    setAuthHeader(response.data.token);
+    localStorage.setItem("hasSession", "true");
+    setAuthHeader(response.data.accessToken);
+
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.message);
@@ -52,8 +53,9 @@ export const logout = createAsyncThunk<void, void, { rejectValue: string }>(
   "auth/logout",
   async (_, { rejectWithValue }) => {
     try {
-      await axios.post<void>("/users/logout");
+      await axios.post("/auth/logout");
 
+      localStorage.removeItem("hasSession");
       clearAuthHeader();
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -61,20 +63,13 @@ export const logout = createAsyncThunk<void, void, { rejectValue: string }>(
   }
 );
 
-export const refresh = createAsyncThunk<User, void, { rejectValue: string }>(
+export const refresh = createAsyncThunk<AuthState, void, { rejectValue: string }>(
   "auth/refresh",
-  async (_, { rejectWithValue, getState }) => {
-    const state = getState() as RootState;
-    const persistedToken = state.auth.token;
-
-    if (persistedToken === null) {
-      return rejectWithValue("Unable to fetch user");
-    }
-
+  async (_, { rejectWithValue }) => {
     try {
-      setAuthHeader(persistedToken);
+      const response = await axios.post("/auth/refresh");
 
-      const response = await axios.get("/users/current");
+      setAuthHeader(response.data.accessToken);
 
       return response.data;
     } catch (error: any) {

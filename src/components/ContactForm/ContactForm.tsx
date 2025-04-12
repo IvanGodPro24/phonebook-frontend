@@ -1,26 +1,20 @@
 import { useId } from "react";
-import { nanoid } from "nanoid";
 import * as Yup from "yup";
-import {
-  Formik,
-  Form,
-  Field,
-  ErrorMessage,
-  FormikHelpers,
-} from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { addContact } from "../../redux/contacts/operations";
 import { toast } from "sonner";
 import clsx from "clsx";
 import { selectContacts } from "../../redux/contacts/selectors";
 import { ContactFormProps } from "./ContactForm.types";
+import { existedContact } from "../../utils/contactUtils";
 
 const ContactSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, "Too short!")
     .max(50, "Too long!")
     .required("Required!"),
-  number: Yup.string()
+  phoneNumber: Yup.string()
     .min(3, "Too short!")
     .max(50, "Too long!")
     .required("Required!"),
@@ -28,7 +22,7 @@ const ContactSchema = Yup.object().shape({
 
 const initialValues = {
   name: "",
-  number: "",
+  phoneNumber: "",
 };
 
 const ContactForm = () => {
@@ -37,29 +31,22 @@ const ContactForm = () => {
   const contacts = useAppSelector(selectContacts);
 
   const nameId = useId();
-  const numberId = useId();
-
-  const existedContact = (name: string, number: string) =>
-    contacts.some(
-      (contact) =>
-        contact.name.toLowerCase() === name.toLowerCase() ||
-        contact.number === number
-    );
+  const phoneNumberId = useId();
 
   const handleSubmit = (
-    { name, number }: ContactFormProps,
+    { name, phoneNumber }: ContactFormProps,
     actions: FormikHelpers<ContactFormProps>
   ) => {
-    if (existedContact(name, number)) {
+    if (existedContact(contacts, name, phoneNumber)) {
       toast.info("Contact already exists.");
       return;
     }
 
     dispatch(
       addContact({
-        id: nanoid(),
         name,
-        number,
+        phoneNumber,
+        contactType: "home",
       })
     );
 
@@ -92,18 +79,18 @@ const ContactForm = () => {
           className="error"
         ></ErrorMessage>
 
-        <label htmlFor={numberId}>Number</label>
+        <label htmlFor={phoneNumberId}>Number</label>
         <Field
           type="tel"
-          name="number"
-          id={numberId}
+          name="phoneNumber"
+          id={phoneNumberId}
           className={clsx(
             "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
             "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
           )}
         />
         <ErrorMessage
-          name="number"
+          name="phoneNumber"
           component="span"
           className="error"
         ></ErrorMessage>

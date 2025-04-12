@@ -24,7 +24,6 @@ const ContactsPage = () => {
       <DocumentTitle>Your Contacts</DocumentTitle>
 
       <div className={css["general-container"]}>
-
         <h1 className="font-bold">Phonebook</h1>
 
         <ContactForm />

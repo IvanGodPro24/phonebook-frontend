@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Contact } from "./contacts.types";
+import { Contact, ContactPost } from "./contacts.types";
 
 export const fetchContacts = createAsyncThunk<
   Contact[],
@@ -10,7 +10,7 @@ export const fetchContacts = createAsyncThunk<
   try {
     const response = await axios.get("/contacts");
 
-    return response.data;
+    return response.data.contacts;
   } catch (error: any) {
     return rejectWithValue(error.message);
   }
@@ -18,7 +18,7 @@ export const fetchContacts = createAsyncThunk<
 
 export const addContact = createAsyncThunk<
   Contact,
-  Contact,
+  ContactPost,
   { rejectValue: string }
 >("contacts/addContact", async (contact, { rejectWithValue }) => {
   try {
@@ -46,11 +46,11 @@ export const deleteContact = createAsyncThunk<
 
 export const editContact = createAsyncThunk<
   Contact,
-  { id: string; name: string; number: string },
+  Contact,
   { rejectValue: string }
->("contacts/editContact", async ({ id, name, number }, { rejectWithValue }) => {
+>("contacts/editContact", async ({ _id, name, phoneNumber }, { rejectWithValue }) => {
   try {
-    const response = await axios.patch(`/contacts/${id}`, { name, number });
+    const response = await axios.patch(`/contacts/${_id}`, { name, phoneNumber });
 
     return response.data;
   } catch (error: any) {

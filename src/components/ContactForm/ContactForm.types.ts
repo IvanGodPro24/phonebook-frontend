@@ -1,4 +1,4 @@
 export type ContactFormProps = {
   name: string;
-  number: string;
+  phoneNumber: string;
 };

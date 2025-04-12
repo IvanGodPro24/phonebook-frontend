@@ -1,24 +1,28 @@
 import { FaUser } from "react-icons/fa6";
 import { FaPhoneAlt } from "react-icons/fa";
 import css from "./Contact.module.css";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { deleteContact, editContact } from "../../redux/contacts/operations";
 import { toast } from "sonner";
 import { useId, useState } from "react";
 import clsx from "clsx";
 
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import { Contact as ContactType } from "../../redux/contacts/contacts.types";
+import { ContactHandle } from "../../redux/contacts/contacts.types";
+import { selectContacts } from "../../redux/contacts/selectors";
+import { existedContact } from "../../utils/contactUtils";
 
-const Contact = ({ id, name, number }: ContactType) => {
+const Contact = ({ _id, name, phoneNumber }: ContactHandle) => {
   const dispatch = useAppDispatch();
+
+  const contacts = useAppSelector(selectContacts);
 
   const nameId = useId();
   const numberId = useId();
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(name);
-  const [editedNumber, setEditedNumber] = useState(number);
+  const [editedNumber, setEditedNumber] = useState(phoneNumber);
   const [isOpen, setIsOpen] = useState(false);
 
   function open() {
@@ -30,7 +34,7 @@ const Contact = ({ id, name, number }: ContactType) => {
   }
 
   const handleDelete = () => {
-    dispatch(deleteContact(id));
+    dispatch(deleteContact(_id));
 
     toast.info("Contact has been deleted!");
   };
@@ -38,9 +42,32 @@ const Contact = ({ id, name, number }: ContactType) => {
   const handleEdit = () => setIsEditing(true);
 
   const handleSave = () => {
-    dispatch(editContact({ id: id, name: editedName, number: editedNumber }));
+    if (
+      editedName.trim().toLowerCase() === name.toLowerCase() &&
+      editedNumber.trim() === phoneNumber.trim()
+    ) {
+      setIsEditing(false);
+      return;
+    }
+
+    if (existedContact(contacts, editedName, editedNumber, _id)) {
+      toast.info(
+        "Another contact with the same name or number already exists."
+      );
+      return;
+    }
+
+    dispatch(
+      editContact({
+        _id,
+        name: editedName,
+        phoneNumber: editedNumber,
+        contactType: "home",
+      })
+    );
 
     toast.success("Contact has been edited!");
+
     setIsEditing(false);
   };
 
@@ -89,7 +116,7 @@ const Contact = ({ id, name, number }: ContactType) => {
 
             <div className={css.container}>
               <FaPhoneAlt />
-              <p>{number}</p>
+              <p>{phoneNumber}</p>
             </div>
           </div>
 

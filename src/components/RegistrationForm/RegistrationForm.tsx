@@ -1,10 +1,9 @@
 import { useId, useState } from "react";
 import * as Yup from "yup";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks";
 import { register } from "../../redux/auth/operations";
-import { toast } from "sonner";
 import clsx from "clsx";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { RegisterCredentials } from "../../redux/auth/auth.types";
@@ -34,6 +33,8 @@ const RegistrationForm = () => {
 
   const [isVisible, setIsVisible] = useState(false);
 
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
 
   const handleSubmit = (
@@ -42,7 +43,7 @@ const RegistrationForm = () => {
   ) => {
     dispatch(register({ name, email, password }));
 
-    toast.success("Register success");
+    navigate('/login')
 
     actions.resetForm();
   };

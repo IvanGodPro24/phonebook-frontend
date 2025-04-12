@@ -12,7 +12,7 @@ export type AuthInitState = {
 
 export type AuthState = {
   user: User;
-  token: string | null;
+  accessToken: string | null;
 };
 
 export type RegisterCredentials = {

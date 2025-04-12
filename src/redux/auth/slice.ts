@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { login, logout, refresh, register } from "./operations";
 import { AuthInitState, AuthState } from "./auth.types";
+import { toast } from "sonner";
 
 const handleAuthentication = (
   state: AuthInitState,
   action: PayloadAction<AuthState>
 ) => {
   state.user = action.payload.user;
-  state.token = action.payload.token;
+  state.token = action.payload.accessToken;
   state.isLoggedIn = true;
 };
 
@@ -30,7 +31,12 @@ const slice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(register.fulfilled, handleAuthentication)
+      .addCase(register.fulfilled, () => {
+        toast.success("Successfully registered a user!");
+      })
+      .addCase(register.rejected, () => {
+        toast.error("Register error!");
+      })
       .addCase(login.fulfilled, handleAuthentication)
       .addCase(logout.fulfilled, (state) => {
         state.user = { name: null, email: null };
@@ -42,7 +48,8 @@ const slice = createSlice({
         state.isRefreshing = true;
       })
       .addCase(refresh.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload.user;
+        state.token = action.payload.accessToken;
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
