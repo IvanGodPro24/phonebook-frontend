@@ -48,12 +48,26 @@ export const editContact = createAsyncThunk<
   Contact,
   Contact,
   { rejectValue: string }
->("contacts/editContact", async ({ _id, name, phoneNumber }, { rejectWithValue }) => {
-  try {
-    const response = await axios.patch(`/contacts/${_id}`, { name, phoneNumber });
+>(
+  "contacts/editContact",
+  async (
+    { _id, name, phoneNumber, email, isFavourite },
+    { rejectWithValue }
+  ) => {
+    try {
+      const contactData = {
+        name,
+        phoneNumber,
+        isFavourite,
+        contactType: "home",
+        email: email && email.trim() !== "" ? email : null,
+      };
 
-    return response.data;
-  } catch (error: any) {
-    return rejectWithValue(error.message);
+      const response = await axios.patch(`/contacts/${_id}`, contactData);
+      
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
   }
-});
+);

@@ -1,5 +1,6 @@
 import { FaUser } from "react-icons/fa6";
-import { FaPhoneAlt } from "react-icons/fa";
+import { FaPhoneAlt, FaStar } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 import css from "./Contact.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { deleteContact, editContact } from "../../redux/contacts/operations";
@@ -7,31 +8,45 @@ import { toast } from "sonner";
 import { useId, useState } from "react";
 import clsx from "clsx";
 
-import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import {
+  Button,
+  Checkbox,
+  Field as HField,
+  Label,
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+} from "@headlessui/react";
+import { CheckIcon } from "@heroicons/react/16/solid";
 import { ContactHandle } from "../../redux/contacts/contacts.types";
 import { selectContacts } from "../../redux/contacts/selectors";
 import { existedContact } from "../../utils/contactUtils";
 
-const Contact = ({ _id, name, phoneNumber }: ContactHandle) => {
+const Contact = ({
+  _id,
+  name,
+  phoneNumber,
+  email,
+  isFavourite,
+}: ContactHandle) => {
   const dispatch = useAppDispatch();
 
   const contacts = useAppSelector(selectContacts);
 
   const nameId = useId();
   const numberId = useId();
+  const emailId = useId();
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(name);
   const [editedNumber, setEditedNumber] = useState(phoneNumber);
+  const [editedFavourite, setEditedFavourite] = useState(isFavourite);
+  const [editedEmail, setEditedEmail] = useState(email);
   const [isOpen, setIsOpen] = useState(false);
 
-  function open() {
-    setIsOpen(true);
-  }
+  const open = () => setIsOpen(true);
 
-  function close() {
-    setIsOpen(false);
-  }
+  const close = () => setIsOpen(false);
 
   const handleDelete = () => {
     dispatch(deleteContact(_id));
@@ -43,14 +58,18 @@ const Contact = ({ _id, name, phoneNumber }: ContactHandle) => {
 
   const handleSave = () => {
     if (
-      editedName.trim().toLowerCase() === name.toLowerCase() &&
-      editedNumber.trim() === phoneNumber.trim()
+      (editedName.trim().toLowerCase() === name.toLowerCase() &&
+        editedNumber.trim() === phoneNumber.trim() &&
+        editedFavourite === isFavourite &&
+        editedEmail?.trim() === email?.trim())
     ) {
       setIsEditing(false);
       return;
     }
 
-    if (existedContact(contacts, editedName, editedNumber, _id)) {
+    if (
+      existedContact(contacts, editedName, editedNumber, editedEmail || "", _id)
+    ) {
       toast.info(
         "Another contact with the same name or number already exists."
       );
@@ -62,6 +81,8 @@ const Contact = ({ _id, name, phoneNumber }: ContactHandle) => {
         _id,
         name: editedName,
         phoneNumber: editedNumber,
+        email: editedEmail && editedEmail.trim() !== "" ? editedEmail : null,
+        isFavourite: editedFavourite,
         contactType: "home",
       })
     );
@@ -98,6 +119,29 @@ const Contact = ({ _id, name, phoneNumber }: ContactHandle) => {
             onChange={(e) => setEditedNumber(e.target.value)}
           />
 
+          <input
+            type="email"
+            name="edit-email"
+            id={emailId}
+            className={clsx(
+              "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
+              "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+            )}
+            value={editedEmail || ""}
+            onChange={(e) => setEditedEmail(e.target.value)}
+          />
+
+          <HField className="flex items-center gap-2">
+            <Checkbox
+              checked={editedFavourite}
+              onChange={setEditedFavourite}
+              className="transition group size-6 rounded-md bg-white/10 p-1 ring-1 ring-white/15 ring-inset data-[checked]:bg-white"
+            >
+              <CheckIcon className="hidden size-4 fill-black group-data-[checked]:block" />
+            </Checkbox>
+            <Label>Favourite</Label>
+          </HField>
+
           <button
             type="button"
             className="text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
@@ -118,6 +162,20 @@ const Contact = ({ _id, name, phoneNumber }: ContactHandle) => {
               <FaPhoneAlt />
               <p>{phoneNumber}</p>
             </div>
+
+            {email && (
+              <div className={css.container}>
+                <MdEmail />
+                <p>{email}</p>
+              </div>
+            )}
+
+            {isFavourite && (
+              <div className={css.container}>
+                <FaStar />
+                <p>Favourite</p>
+              </div>
+            )}
           </div>
 
           <button

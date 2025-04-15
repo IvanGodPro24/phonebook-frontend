@@ -2,6 +2,8 @@ export type Contact = {
   _id: string;
   name: string;
   phoneNumber: string;
+  email: string | null;
+  isFavourite: boolean;
   contactType: string;
 };
 
@@ -9,11 +11,15 @@ export type ContactHandle = {
   _id: string;
   name: string;
   phoneNumber: string;
+  email: string | null;
+  isFavourite: boolean;
 };
 
 export type ContactPost = {
   name: string;
   phoneNumber: string;
+  email?: string | null;
+  isFavourite: boolean;
   contactType: string;
 };
 
