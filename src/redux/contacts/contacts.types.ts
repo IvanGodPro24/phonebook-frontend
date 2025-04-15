@@ -13,6 +13,7 @@ export type ContactHandle = {
   phoneNumber: string;
   email: string | null;
   isFavourite: boolean;
+  contactType: string;
 };
 
 export type ContactPost = {

@@ -55,6 +55,7 @@ const slice = createSlice({
       })
       .addCase(refresh.rejected, (state) => {
         state.isRefreshing = false;
+        toast.error("Session not found, please log in again");
       });
   },
 });

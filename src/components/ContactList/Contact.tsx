@@ -1,6 +1,7 @@
 import { FaUser } from "react-icons/fa6";
 import { FaPhoneAlt, FaStar } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { RiContactsBook2Fill } from "react-icons/ri";
 import css from "./Contact.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { deleteContact, editContact } from "../../redux/contacts/operations";
@@ -16,8 +17,9 @@ import {
   Dialog,
   DialogPanel,
   DialogTitle,
+  Select,
 } from "@headlessui/react";
-import { CheckIcon } from "@heroicons/react/16/solid";
+import { CheckIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
 import { ContactHandle } from "../../redux/contacts/contacts.types";
 import { selectContacts } from "../../redux/contacts/selectors";
 import { existedContact } from "../../utils/contactUtils";
@@ -28,6 +30,7 @@ const Contact = ({
   phoneNumber,
   email,
   isFavourite,
+  contactType,
 }: ContactHandle) => {
   const dispatch = useAppDispatch();
 
@@ -36,12 +39,14 @@ const Contact = ({
   const nameId = useId();
   const numberId = useId();
   const emailId = useId();
+  const contactTypeId = useId();
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(name);
   const [editedNumber, setEditedNumber] = useState(phoneNumber);
-  const [editedFavourite, setEditedFavourite] = useState(isFavourite);
   const [editedEmail, setEditedEmail] = useState(email);
+  const [editedFavourite, setEditedFavourite] = useState(isFavourite);
+  const [editedType, setEditedType] = useState(contactType);
   const [isOpen, setIsOpen] = useState(false);
 
   const open = () => setIsOpen(true);
@@ -58,10 +63,11 @@ const Contact = ({
 
   const handleSave = () => {
     if (
-      (editedName.trim().toLowerCase() === name.toLowerCase() &&
-        editedNumber.trim() === phoneNumber.trim() &&
-        editedFavourite === isFavourite &&
-        editedEmail?.trim() === email?.trim())
+      editedName.trim().toLowerCase() === name.toLowerCase() &&
+      editedNumber.trim() === phoneNumber.trim() &&
+      editedFavourite === isFavourite &&
+      editedEmail?.trim() === email?.trim() &&
+      editedType === contactType
     ) {
       setIsEditing(false);
       return;
@@ -83,7 +89,7 @@ const Contact = ({
         phoneNumber: editedNumber,
         email: editedEmail && editedEmail.trim() !== "" ? editedEmail : null,
         isFavourite: editedFavourite,
-        contactType: "home",
+        contactType: editedType,
       })
     );
 
@@ -131,6 +137,27 @@ const Contact = ({
             onChange={(e) => setEditedEmail(e.target.value)}
           />
 
+          <HField className="relative w-full">
+            <Select
+              name="type"
+              id={contactTypeId}
+              value={editedType}
+              onChange={(e) => setEditedType(e.target.value)}
+              className={clsx(
+                "mt-3 block w-full appearance-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
+                "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+              )}
+            >
+              <option value="work">Work</option>
+              <option value="home">Home</option>
+              <option value="personal">Personal</option>
+            </Select>
+            <ChevronDownIcon
+              className="group pointer-events-none absolute top-2 right-2 size-4 fill-white/60"
+              aria-hidden="true"
+            />
+          </HField>
+
           <HField className="flex items-center gap-2">
             <Checkbox
               checked={editedFavourite}
@@ -176,6 +203,11 @@ const Contact = ({
                 <p>Favourite</p>
               </div>
             )}
+
+            <div className={css.container}>
+              <RiContactsBook2Fill />
+              <p>{contactType}</p>
+            </div>
           </div>
 
           <button

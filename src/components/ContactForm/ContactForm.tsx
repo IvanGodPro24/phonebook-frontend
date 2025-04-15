@@ -1,7 +1,7 @@
 import { useId, useState } from "react";
 import * as Yup from "yup";
-import { Checkbox, Field as HField, Label } from "@headlessui/react";
-import { CheckIcon } from "@heroicons/react/16/solid";
+import { Checkbox, Field as HField, Label, Select } from "@headlessui/react";
+import { CheckIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { addContact } from "../../redux/contacts/operations";
@@ -37,7 +37,9 @@ const ContactForm = () => {
   const nameId = useId();
   const phoneNumberId = useId();
   const emailId = useId();
+  const contactTypeId = useId();
 
+  const [type, setType] = useState("home");
   const [enabled, setEnabled] = useState(false);
 
   const handleSubmit = (
@@ -54,7 +56,7 @@ const ContactForm = () => {
         name,
         phoneNumber,
         isFavourite: enabled,
-        contactType: "home",
+        contactType: type,
         ...(email.trim() !== "" && { email }),
       })
     );
@@ -120,6 +122,29 @@ const ContactForm = () => {
           component="span"
           className="error"
         ></ErrorMessage>
+
+        <label htmlFor={contactTypeId}>Contact Type</label>
+
+        <HField className="relative w-full">
+          <Select
+            name="type"
+            id={contactTypeId}
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+            className={clsx(
+              "mt-3 block w-full appearance-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
+              "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+            )}
+          >
+            <option value="work">Work</option>
+            <option value="home">Home</option>
+            <option value="personal">Personal</option>
+          </Select>
+          <ChevronDownIcon
+            className="group pointer-events-none absolute top-2 right-2 size-4 fill-white/60"
+            aria-hidden="true"
+          />
+        </HField>
 
         <HField className="flex items-center gap-2">
           <Checkbox

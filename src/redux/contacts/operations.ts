@@ -51,7 +51,7 @@ export const editContact = createAsyncThunk<
 >(
   "contacts/editContact",
   async (
-    { _id, name, phoneNumber, email, isFavourite },
+    { _id, name, phoneNumber, email, isFavourite, contactType },
     { rejectWithValue }
   ) => {
     try {
@@ -59,7 +59,7 @@ export const editContact = createAsyncThunk<
         name,
         phoneNumber,
         isFavourite,
-        contactType: "home",
+        contactType,
         email: email && email.trim() !== "" ? email : null,
       };
 
