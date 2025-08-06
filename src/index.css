@@ -17,11 +17,13 @@
 
 body {
   font-family: sans-serif;
+  color: var(--white);
   line-height: 1.5;
 
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background: var(--black);
 }
 
 h1,
