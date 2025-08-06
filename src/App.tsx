@@ -22,12 +22,12 @@ function App() {
   const dispatch = useAppDispatch();
   const isRefreshing = useAppSelector(selectIsRefreshing);
 
-useEffect(() => {
-  const hasSession = localStorage.getItem("hasSession");
-  if (hasSession === "true") {
-    dispatch(refresh());
-  }
-}, [dispatch]);
+  useEffect(() => {
+    const hasSession = localStorage.getItem("hasSession");
+    if (hasSession === "true") {
+      dispatch(refresh());
+    }
+  }, [dispatch]);
 
   return isRefreshing ? (
     <Loader />

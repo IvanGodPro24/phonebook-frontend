@@ -29,9 +29,8 @@ const ContactsPage = () => {
         <ContactForm />
         <SearchBox />
 
-        {loading && <Loader />}
+        {loading ? <Loader /> : <ContactList />}
         {error && <p>{error}</p>}
-        <ContactList />
       </div>
     </>
   );
