@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Contact, ContactPost } from "./contacts.types";
+import { Contact, ContactEdit, ContactPost } from "./contacts.types";
 
 export const fetchContacts = createAsyncThunk<
   Contact[],
@@ -22,7 +22,16 @@ export const addContact = createAsyncThunk<
   { rejectValue: string }
 >("contacts/addContact", async (contact, { rejectWithValue }) => {
   try {
-    const response = await axios.post("/contacts", contact);
+    const formData = new FormData();
+
+    formData.append("name", contact.name);
+    formData.append("phoneNumber", contact.phoneNumber);
+    formData.append("isFavourite", String(contact.isFavourite));
+    formData.append("contactType", contact.contactType);
+    if (contact.email) formData.append("email", contact.email);
+    if (contact.photo) formData.append("photo", contact.photo);
+
+    const response = await axios.post("/contacts", formData);
 
     return response.data;
   } catch (error: any) {
@@ -46,25 +55,26 @@ export const deleteContact = createAsyncThunk<
 
 export const editContact = createAsyncThunk<
   Contact,
-  Contact,
+  ContactEdit,
   { rejectValue: string }
 >(
   "contacts/editContact",
   async (
-    { _id, name, phoneNumber, email, isFavourite, contactType },
+    { _id, name, phoneNumber, email, isFavourite, contactType, photo },
     { rejectWithValue }
   ) => {
     try {
-      const contactData = {
-        name,
-        phoneNumber,
-        isFavourite,
-        contactType,
-        email: email && email.trim() !== "" ? email : null,
-      };
+      const formData = new FormData();
 
-      const response = await axios.patch(`/contacts/${_id}`, contactData);
-      
+      formData.append("name", name);
+      formData.append("phoneNumber", phoneNumber);
+      formData.append("isFavourite", String(isFavourite));
+      formData.append("contactType", contactType);
+      if (email) formData.append("email", email);
+      if (photo instanceof File) formData.append("photo", photo);
+
+      const response = await axios.patch(`/contacts/${_id}`, formData);
+
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.message);

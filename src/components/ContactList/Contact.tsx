@@ -31,6 +31,7 @@ const Contact = ({
   email,
   isFavourite,
   contactType,
+  photo,
 }: ContactHandle) => {
   const dispatch = useAppDispatch();
 
@@ -40,6 +41,7 @@ const Contact = ({
   const numberId = useId();
   const emailId = useId();
   const contactTypeId = useId();
+  const photoId = useId();
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(name);
@@ -47,7 +49,14 @@ const Contact = ({
   const [editedEmail, setEditedEmail] = useState(email);
   const [editedFavourite, setEditedFavourite] = useState(isFavourite);
   const [editedType, setEditedType] = useState(contactType);
+  const [editedPhoto, setEditedPhoto] = useState<File | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setEditedPhoto(e.target.files[0]);
+    }
+  };
 
   const open = () => setIsOpen(true);
 
@@ -67,7 +76,8 @@ const Contact = ({
       editedNumber.trim() === phoneNumber.trim() &&
       editedFavourite === isFavourite &&
       editedEmail?.trim() === email?.trim() &&
-      editedType === contactType
+      editedType === contactType &&
+      !editedPhoto
     ) {
       setIsEditing(false);
       return;
@@ -90,6 +100,7 @@ const Contact = ({
         email: editedEmail && editedEmail.trim() !== "" ? editedEmail : null,
         isFavourite: editedFavourite,
         contactType: editedType,
+        photo: editedPhoto || photo,
       })
     );
 
@@ -158,6 +169,32 @@ const Contact = ({
             />
           </HField>
 
+          <input
+            type="file"
+            name="photo"
+            id={photoId}
+            accept="image/*"
+            onChange={handleFileChange}
+            className={clsx(
+              "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
+              "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+            )}
+          />
+
+          {editedPhoto ? (
+            <img
+              src={URL.createObjectURL(editedPhoto)}
+              alt="Preview"
+              className="w-24 h-24 object-cover rounded"
+            />
+          ) : photo ? (
+            <img
+              src={photo}
+              alt="Contact"
+              className="w-24 h-24 object-cover rounded"
+            />
+          ) : null}
+
           <HField className="flex items-center gap-2">
             <Checkbox
               checked={editedFavourite}
@@ -180,6 +217,8 @@ const Contact = ({
       ) : (
         <>
           <div className={css["contact-container"]}>
+            <img src={photo} alt="" width="300" />
+
             <div className={css.container}>
               <FaUser />
               <p>{name}</p>

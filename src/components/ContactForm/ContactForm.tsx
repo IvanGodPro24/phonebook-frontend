@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { ChangeEvent, useId, useRef, useState } from "react";
 import * as Yup from "yup";
 import { Checkbox, Field as HField, Label, Select } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
@@ -38,9 +38,19 @@ const ContactForm = () => {
   const phoneNumberId = useId();
   const emailId = useId();
   const contactTypeId = useId();
+  const photoId = useId();
+
+  const photoRef = useRef<HTMLInputElement>(null);
 
   const [type, setType] = useState("home");
   const [enabled, setEnabled] = useState(false);
+  const [photo, setPhoto] = useState<File | null>(null);
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setPhoto(e.target.files[0]);
+    }
+  };
 
   const handleSubmit = (
     { name, phoneNumber, email }: ContactFormProps,
@@ -57,12 +67,15 @@ const ContactForm = () => {
         phoneNumber,
         isFavourite: enabled,
         contactType: type,
+        photo,
         ...(email.trim() !== "" && { email }),
       })
     );
 
     toast.success("Contact has been added!");
 
+    setPhoto(null);
+    photoRef.current && (photoRef.current.value = "");
     actions.resetForm();
   };
 
@@ -145,6 +158,28 @@ const ContactForm = () => {
             aria-hidden="true"
           />
         </HField>
+
+        <label htmlFor={photoId}>Photo</label>
+        <input
+          type="file"
+          ref={photoRef}
+          id={photoId}
+          accept="image/*"
+          onChange={handleFileChange}
+          className={clsx(
+            "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
+            "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+          )}
+        />
+        {photo && (
+          <div className="mt-2">
+            <img
+              src={URL.createObjectURL(photo)}
+              alt="Preview"
+              className="w-24 h-24 object-cover rounded"
+            />
+          </div>
+        )}
 
         <HField className="flex items-center gap-2">
           <Checkbox

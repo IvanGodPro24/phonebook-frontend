@@ -5,6 +5,7 @@ export type Contact = {
   email: string | null;
   isFavourite: boolean;
   contactType: string;
+  photo: string;
 };
 
 export type ContactHandle = {
@@ -14,6 +15,17 @@ export type ContactHandle = {
   email: string | null;
   isFavourite: boolean;
   contactType: string;
+  photo: string;
+};
+
+export type ContactEdit = {
+  _id: string;
+  name: string;
+  phoneNumber: string;
+  email: string | null;
+  isFavourite: boolean;
+  contactType: string;
+  photo: File | null | string;
 };
 
 export type ContactPost = {
@@ -22,6 +34,7 @@ export type ContactPost = {
   email?: string | null;
   isFavourite: boolean;
   contactType: string;
+  photo: File | null;
 };
 
 export type ContactState = {
