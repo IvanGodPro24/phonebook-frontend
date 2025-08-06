@@ -2,7 +2,7 @@ import { useId, useState } from "react";
 import * as Yup from "yup";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch } from "../../hooks/hooks";
 import { register } from "../../redux/auth/operations";
 import clsx from "clsx";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -43,7 +43,7 @@ const RegistrationForm = () => {
   ) => {
     dispatch(register({ name, email, password }));
 
-    navigate('/login')
+    navigate("/login");
 
     actions.resetForm();
   };

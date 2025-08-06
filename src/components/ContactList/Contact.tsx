@@ -3,7 +3,7 @@ import { FaPhoneAlt, FaStar } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RiContactsBook2Fill } from "react-icons/ri";
 import css from "./Contact.module.css";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { deleteContact, editContact } from "../../redux/contacts/operations";
 import { toast } from "sonner";
 import { useId, useState } from "react";

@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Checkbox, Field as HField, Label, Select } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { addContact } from "../../redux/contacts/operations";
 import { toast } from "sonner";
 import clsx from "clsx";

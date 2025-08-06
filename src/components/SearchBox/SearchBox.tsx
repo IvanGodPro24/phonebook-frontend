@@ -1,6 +1,6 @@
 import { useId } from "react";
 import css from "./SearchBox.module.css";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { changeFilter } from "../../redux/filters/slice";
 import { selectHandleFilter } from "../../redux/filters/selectors";
 import clsx from "clsx";
@@ -20,7 +20,6 @@ const SearchBox = () => {
       <label htmlFor={searchId}>Find contacts</label>
       <input
         type="text"
-
         name="filter"
         id={searchId}
         value={query}

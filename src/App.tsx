@@ -1,6 +1,6 @@
 import "./App.css";
 import { lazy, Suspense, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "./hooks";
+import { useAppDispatch, useAppSelector } from "./hooks/hooks";
 import { Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
 import Layout from "./components/Layout/Layout";

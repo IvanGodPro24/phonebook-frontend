@@ -2,7 +2,7 @@ import { useId, useState } from "react";
 import * as Yup from "yup";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch } from "../../hooks/hooks";
 import { login } from "../../redux/auth/operations";
 import { toast } from "sonner";
 import clsx from "clsx";

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import DocumentTitle from "../../DocumentTitle";
 import css from "./ContactsPage.module.css";
 import ContactForm from "../../components/ContactForm/ContactForm";

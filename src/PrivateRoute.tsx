@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAppSelector } from "./hooks";
+import { useAppSelector } from "./hooks/hooks";
 import { selectIsLoggedIn } from "./redux/auth/selectors";
 import { RouteProps } from "./Route.types";
 
