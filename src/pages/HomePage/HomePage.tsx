@@ -9,14 +9,7 @@ const HomePage = () => {
       <DocumentTitle>Home</DocumentTitle>
 
       <div className={css.container}>
-        <div
-          style={{
-            position: "relative",
-            height: "700px",
-            overflow: "hidden",
-            marginTop: "5rem",
-          }}
-        >
+        <div className={css.titleContainer}>
           <ShapeBlur
             variation={0}
             pixelRatioProp={window.devicePixelRatio || 1}
@@ -26,14 +19,14 @@ const HomePage = () => {
             circleSize={0.2}
             circleEdge={1}
           />
-        </div>
 
-        <ShinyText
-          text="The Best App for your Contacts"
-          disabled={false}
-          speed={3}
-          className={css.title}
-        />
+          <ShinyText
+            text="The Best App for your Contacts"
+            disabled={false}
+            speed={3}
+            className={css.title}
+          />
+        </div>
       </div>
     </>
   );

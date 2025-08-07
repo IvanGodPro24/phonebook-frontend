@@ -8,7 +8,6 @@
 .three-body {
   --uib-size: 45px;
   --uib-speed: 0.8s;
-  --uib-color: #5d3fd3;
   position: relative;
   display: inline-block;
   height: var(--uib-size);
@@ -28,7 +27,7 @@
   height: 0%;
   width: 100%;
   padding-bottom: 100%;
-  background-color: var(--uib-color);
+  background-color: var(--primary);
   border-radius: 50%;
 }
 
