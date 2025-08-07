@@ -1,5 +1,3 @@
-import clsx from "clsx";
-import css from "./LoginPage.module.css";
 import LoginForm from "../../components/LoginForm/LoginForm";
 import DocumentTitle from "../../DocumentTitle";
 
@@ -9,7 +7,7 @@ const LoginPage = () => {
       <DocumentTitle>Login</DocumentTitle>
 
       <h1 className="mt font-sans font-bold">Hello again!</h1>
-      <p className={clsx(css.greeting, "m-auto")}>
+      <p className="max-w-[150px] m-auto mt-4">
         Welcome back you’ve been missed!
       </p>
       <LoginForm />

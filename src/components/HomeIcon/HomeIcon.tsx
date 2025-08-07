@@ -3,6 +3,7 @@ import { motion, useAnimation } from "framer-motion";
 import {
   forwardRef,
   HTMLAttributes,
+  MouseEvent,
   useCallback,
   useImperativeHandle,
   useRef,
@@ -49,7 +50,7 @@ const HomeIcon = forwardRef<HomeIconHandle, HomeIconProps>(
     });
 
     const handleMouseEnter = useCallback(
-      (e: React.MouseEvent<HTMLDivElement>) => {
+      (e: MouseEvent<HTMLDivElement>) => {
         if (!isControlledRef.current) {
           controls.start("animate");
         } else {
@@ -60,7 +61,7 @@ const HomeIcon = forwardRef<HomeIconHandle, HomeIconProps>(
     );
 
     const handleMouseLeave = useCallback(
-      (e: React.MouseEvent<HTMLDivElement>) => {
+      (e: MouseEvent<HTMLDivElement>) => {
         if (!isControlledRef.current) {
           controls.start("normal");
         } else {

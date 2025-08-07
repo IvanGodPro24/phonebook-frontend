@@ -1,14 +1,13 @@
 import useDevice from "../../hooks/useDevice";
 import { LogoutIcon } from "../LogoutIcon/LogoutIcon";
 import { UserIcon } from "../UserIcon/UserIcon";
-import css from "./AuthNav.module.css";
 import { Link } from "react-router-dom";
 
 const AuthNav = () => {
   const { isMobile } = useDevice();
 
   return (
-    <ul className={css.authlist}>
+    <ul className="flex gap-4">
       <li>
         {!isMobile ? (
           <Link

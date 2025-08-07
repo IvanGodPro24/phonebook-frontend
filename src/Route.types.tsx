@@ -1,4 +1,6 @@
+import { ReactElement } from "react";
+
 export type RouteProps = {
-  component: React.ReactElement;
+  component: ReactElement;
   redirectTo: string;
 };

@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import DocumentTitle from "../../DocumentTitle";
-import css from "./ContactsPage.module.css";
 import ContactForm from "../../components/ContactForm/ContactForm";
 import SearchBox from "../../components/SearchBox/SearchBox";
 import Loader from "../../components/Loader/Loader";
@@ -23,7 +22,7 @@ const ContactsPage = () => {
     <>
       <DocumentTitle>Your Contacts</DocumentTitle>
 
-      <div className={css["general-container"]}>
+      <div className='mt-16 mb-16'>
         <h1 className="font-bold">Phonebook</h1>
 
         <ContactForm />

@@ -51,10 +51,6 @@
   margin-top: 3rem;
 }
 
-.m-auto {
-  margin: 0 auto;
-}
-
 .error {
-  color: red;
+  color: var(--error);
 }

@@ -1,3 +1,4 @@
+import { FC } from "react";
 import "./ShinyText.css";
 
 interface ShinyTextProps {
@@ -7,7 +8,7 @@ interface ShinyTextProps {
   className?: string;
 }
 
-const ShinyText: React.FC<ShinyTextProps> = ({
+const ShinyText: FC<ShinyTextProps> = ({
   text,
   disabled = false,
   speed = 5,

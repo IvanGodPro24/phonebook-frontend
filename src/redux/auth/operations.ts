@@ -7,7 +7,7 @@ import {
   User,
 } from "./auth.types";
 
-axios.defaults.baseURL = "https://phonebook-backend-n8t6.onrender.com";
+axios.defaults.baseURL = "http://localhost:7070";
 axios.defaults.withCredentials = true;
 
 const setAuthHeader = (token: string) => {

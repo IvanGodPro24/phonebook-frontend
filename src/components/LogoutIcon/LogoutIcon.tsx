@@ -4,6 +4,7 @@ import { motion, useAnimation } from "framer-motion";
 import {
   forwardRef,
   HTMLAttributes,
+  MouseEvent,
   useCallback,
   useImperativeHandle,
   useRef,
@@ -43,7 +44,7 @@ const LogoutIcon = forwardRef<LogoutIconHandle, LogoutIconProps>(
     });
 
     const handleMouseEnter = useCallback(
-      (e: React.MouseEvent<HTMLDivElement>) => {
+      (e: MouseEvent<HTMLDivElement>) => {
         if (!isControlledRef.current) {
           controls.start("animate");
         } else {
@@ -54,7 +55,7 @@ const LogoutIcon = forwardRef<LogoutIconHandle, LogoutIconProps>(
     );
 
     const handleMouseLeave = useCallback(
-      (e: React.MouseEvent<HTMLDivElement>) => {
+      (e: MouseEvent<HTMLDivElement>) => {
         if (!isControlledRef.current) {
           controls.start("normal");
         } else {

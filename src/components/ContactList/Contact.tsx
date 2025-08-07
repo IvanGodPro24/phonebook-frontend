@@ -2,11 +2,10 @@ import { FaUser } from "react-icons/fa6";
 import { FaPhoneAlt, FaStar } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RiContactsBook2Fill } from "react-icons/ri";
-import css from "./Contact.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { deleteContact, editContact } from "../../redux/contacts/operations";
 import { toast } from "sonner";
-import { useId, useState } from "react";
+import { ChangeEvent, useId, useState } from "react";
 import clsx from "clsx";
 
 import {
@@ -52,7 +51,7 @@ const Contact = ({
   const [editedPhoto, setEditedPhoto] = useState<File | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setEditedPhoto(e.target.files[0]);
     }
@@ -112,7 +111,7 @@ const Contact = ({
   return (
     <>
       {isEditing ? (
-        <div className={css.container}>
+        <div className="flex items-center gap-2.5">
           <input
             type="text"
             name="edit-name"
@@ -216,60 +215,48 @@ const Contact = ({
         </div>
       ) : (
         <>
-          <div className={css["contact-container"]}>
-            <img src={photo} alt="" width="300" />
+          <div className="flex flex-col gap-2.5">
+            {photo && <img src={photo} alt="photo" width="300" />}
 
-            <div className={css.container}>
+            <div className="flex items-center gap-2.5">
               <FaUser />
               <p>{name}</p>
             </div>
 
-            <div className={css.container}>
+            <div className="flex items-center gap-2.5">
               <FaPhoneAlt />
               <p>{phoneNumber}</p>
             </div>
 
             {email && (
-              <div className={css.container}>
+              <div className="flex items-center gap-2.5">
                 <MdEmail />
                 <p>{email}</p>
               </div>
             )}
 
             {isFavourite && (
-              <div className={css.container}>
+              <div className="flex items-center gap-2.5">
                 <FaStar />
                 <p>Favourite</p>
               </div>
             )}
 
-            <div className={css.container}>
+            <div className="flex items-center gap-2.5">
               <RiContactsBook2Fill />
               <p>{contactType}</p>
             </div>
           </div>
 
-          <button
-            type="button"
-            className={clsx(
-              "text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white",
-              css["ml-auto"]
-            )}
-            onClick={open}
-          >
-            Delete
-          </button>
+          <div className="flex gap-3">
+            <button type="button" className="" onClick={open}>
+              Delete
+            </button>
 
-          <button
-            type="button"
-            className={clsx(
-              css.ml,
-              "text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-            )}
-            onClick={handleEdit}
-          >
-            Edit
-          </button>
+            <button type="button" className="" onClick={handleEdit}>
+              Edit
+            </button>
+          </div>
 
           <Dialog
             open={isOpen}

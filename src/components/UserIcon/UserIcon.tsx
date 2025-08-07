@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import type { Variants } from "framer-motion";
 import { motion, useAnimation } from "framer-motion";
-import type { HTMLAttributes } from "react";
+import type { HTMLAttributes, MouseEvent } from "react";
 import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
 
 export interface UserIconHandle {
@@ -50,7 +50,7 @@ const UserIcon = forwardRef<UserIconHandle, UserIconProps>(
     });
 
     const handleMouseEnter = useCallback(
-      (e: React.MouseEvent<HTMLDivElement>) => {
+      (e: MouseEvent<HTMLDivElement>) => {
         if (!isControlledRef.current) {
           controls.start("animate");
         } else {
@@ -61,7 +61,7 @@ const UserIcon = forwardRef<UserIconHandle, UserIconProps>(
     );
 
     const handleMouseLeave = useCallback(
-      (e: React.MouseEvent<HTMLDivElement>) => {
+      (e: MouseEvent<HTMLDivElement>) => {
         if (!isControlledRef.current) {
           controls.start("normal");
         } else {

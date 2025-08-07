@@ -1,4 +1,3 @@
-import css from "./AppBar.module.css";
 import Navigation from "../Navigation/Navigation";
 import AuthNav from "../AuthNav/AuthNav";
 import { useAppSelector } from "../../hooks/hooks";
@@ -9,7 +8,7 @@ const AppBar = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   return (
-    <header className={css.header}>
+    <header className='flex justify-between items-center p-4 border-b'>
       <Navigation />
 
       {isLoggedIn ? <UserMenu /> : <AuthNav />}

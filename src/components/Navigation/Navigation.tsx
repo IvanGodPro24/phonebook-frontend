@@ -1,7 +1,6 @@
 import { useAppSelector } from "../../hooks/hooks";
 import { NavLink } from "react-router-dom";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
-import css from "./Navigation.module.css";
 import useDevice from "../../hooks/useDevice";
 import { HomeIcon } from "../HomeIcon/HomeIcon";
 import { UserIcon } from "../UserIcon/UserIcon";
@@ -12,7 +11,7 @@ const Navigation = () => {
 
   return (
     <nav>
-      <ul className={css.navlist}>
+      <ul className="flex gap-4">
         <li>
           {!isMobile ? (
             <NavLink to="/" className="text-sm/6 font-semibold text-white/50">
