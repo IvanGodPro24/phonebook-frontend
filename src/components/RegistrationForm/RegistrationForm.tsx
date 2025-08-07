@@ -1,6 +1,7 @@
 import { useId, useState } from "react";
 import * as Yup from "yup";
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
+import { ErrorMessage, Field, Formik, FormikHelpers } from "formik";
+import FormComponent from "../FormComponent/FormComponent";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/hooks";
 import { register } from "../../redux/auth/operations";
@@ -54,7 +55,7 @@ const RegistrationForm = () => {
       onSubmit={handleSubmit}
       validationSchema={RegistrationSchema}
     >
-      <Form className="form">
+      <FormComponent>
         <label htmlFor={nameId}>Username</label>
         <Field
           type="text"
@@ -114,11 +115,11 @@ const RegistrationForm = () => {
 
         <p className="m-auto">
           Already have an account?{" "}
-          <Link to="/login" className="extra-link">
+          <Link to="/login" className="text-base">
             Log in
           </Link>
         </p>
-      </Form>
+      </FormComponent>
     </Formik>
   );
 };

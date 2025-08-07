@@ -6,7 +6,7 @@ const RegistrationPage = () => {
     <>
       <DocumentTitle>Registration</DocumentTitle>
 
-      <h1 className="mt font-sans font-bold">Join Us!</h1>
+      <h1 className="font-sans font-bold mt-12">Join Us!</h1>
       <RegistrationForm />
     </>
   );

@@ -14,7 +14,7 @@ const Navigation = () => {
       <ul className="flex gap-4">
         <li>
           {!isMobile ? (
-            <NavLink to="/" className="text-sm/6 font-semibold text-white/50">
+            <NavLink to="/" className="text-4xl font-semibold text-white/50">
               Home
             </NavLink>
           ) : (
@@ -29,7 +29,7 @@ const Navigation = () => {
             <li>
               <NavLink
                 to="/contacts"
-                className="text-sm/6 font-semibold text-white/50"
+                className="text-4xl font-semibold text-white/50"
               >
                 Contacts
               </NavLink>

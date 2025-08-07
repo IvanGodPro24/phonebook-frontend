@@ -1,7 +1,5 @@
-import clsx from "clsx";
 import { VscBracketError } from "react-icons/vsc";
 import { Link } from "react-router-dom";
-import css from "./NotFoundPage.module.css";
 
 const NotFoundPage = () => {
   return (
@@ -14,10 +12,7 @@ const NotFoundPage = () => {
         </p>
         <Link
           to="/"
-          className={clsx(
-            css.link,
-            "py-3 px-6 rounded-lg bg-[var(--primary)] text-[var(--white)]"
-          )}
+          className="link py-3 px-6 rounded-lg bg-[var(--primary)] text-[var(--white)]"
         >
           Return to Home
         </Link>

@@ -6,7 +6,7 @@ const LoginPage = () => {
     <>
       <DocumentTitle>Login</DocumentTitle>
 
-      <h1 className="mt font-sans font-bold">Hello again!</h1>
+      <h1 className="font-sans font-bold mt-12">Hello again!</h1>
       <p className="max-w-[150px] m-auto mt-4">
         Welcome back you’ve been missed!
       </p>

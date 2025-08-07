@@ -20,7 +20,8 @@ const SearchBox = () => {
         name="filter"
         id={searchId}
         value={query}
-        className="mt-3 block rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+        className="mt-3 block rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white 
+        focus:outline-2 focus:outline-offset-2 focus:outline-white/25"
         onChange={handleFilter}
       />
     </div>

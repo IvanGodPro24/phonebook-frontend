@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url("./reset.css");
 
 :root {
   font-family: Roboto, sans-serif;
@@ -20,8 +19,6 @@ body {
 }
 
 a {
-  font-size: 2rem;
-
   transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -31,4 +28,66 @@ a:hover {
 
 .transition {
   transition: background 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.link {
+  box-shadow: var(--shadow-primary-sm);
+
+  transition: all 0.3s ease;
+}
+
+.link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-primary-md);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+ul,
+ol {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+input,
+a,
+button,
+textarea {
+  border: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+textarea {
+  resize: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }

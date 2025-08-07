@@ -2,7 +2,8 @@ import { ChangeEvent, useId, useRef, useState } from "react";
 import * as Yup from "yup";
 import { Checkbox, Field as HField, Label, Select } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+import { Formik, Field, ErrorMessage, FormikHelpers } from "formik";
+import FormComponent from "../FormComponent/FormComponent";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { addContact } from "../../redux/contacts/operations";
 import { toast } from "sonner";
@@ -85,7 +86,7 @@ const ContactForm = () => {
       onSubmit={handleSubmit}
       validationSchema={ContactSchema}
     >
-      <Form className="form">
+      <FormComponent>
         <label htmlFor={nameId}>Name</label>
 
         <Field
@@ -198,7 +199,7 @@ const ContactForm = () => {
         >
           Add contact
         </button>
-      </Form>
+      </FormComponent>
     </Formik>
   );
 };

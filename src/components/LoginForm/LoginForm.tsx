@@ -1,6 +1,7 @@
 import { useId, useState } from "react";
 import * as Yup from "yup";
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
+import { ErrorMessage, Field, Formik, FormikHelpers } from "formik";
+import FormComponent from "../FormComponent/FormComponent";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/hooks";
 import { login } from "../../redux/auth/operations";
@@ -58,7 +59,7 @@ const LoginForm = () => {
       onSubmit={handleSubmit}
       validationSchema={LoginSchema}
     >
-      <Form className="form">
+      <FormComponent>
         <label htmlFor={emailId}>Email</label>
         <Field
           type="email"
@@ -106,11 +107,11 @@ const LoginForm = () => {
 
         <p className="m-auto">
           Not a member?{" "}
-          <Link to="/register" className="extra-link">
+          <Link to="/register" className="text-base">
             Register now
           </Link>
         </p>
-      </Form>
+      </FormComponent>
     </Formik>
   );
 };

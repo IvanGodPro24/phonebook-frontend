@@ -11,11 +11,11 @@ import { HelmetProvider } from "react-helmet-async";
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
     <Provider store={store}>
-        <BrowserRouter>
-          <HelmetProvider>
-            <App />
-          </HelmetProvider>
-        </BrowserRouter>
+      <BrowserRouter>
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
+      </BrowserRouter>
     </Provider>
   </StrictMode>
 );
