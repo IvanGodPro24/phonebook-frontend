@@ -10,7 +10,10 @@ const AuthNav = () => {
     <ul className="flex gap-4">
       <li>
         {!isMobile ? (
-          <Link to="/register" className="text-4xl font-semibold text-white/50">
+          <Link
+            to="/register"
+            className="text-4xl font-semibold text-white/50 hover:text-white transition-colors"
+          >
             Register
           </Link>
         ) : (
@@ -21,7 +24,10 @@ const AuthNav = () => {
       </li>
       <li>
         {!isMobile ? (
-          <Link to="/login" className="text-4xl font-semibold text-white/50">
+          <Link
+            to="/login"
+            className="text-4xl font-semibold text-white/50 hover:text-white transition-colors"
+          >
             Log In
           </Link>
         ) : (

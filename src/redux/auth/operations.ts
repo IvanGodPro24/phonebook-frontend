@@ -28,7 +28,7 @@ export const register = createAsyncThunk<
 
     return response.data;
   } catch (error: any) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.response?.data?.data || error.message);
   }
 });
 
@@ -45,7 +45,7 @@ export const login = createAsyncThunk<
 
     return response.data;
   } catch (error: any) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.response?.data?.data || error.message);
   }
 });
 
@@ -58,7 +58,7 @@ export const logout = createAsyncThunk<void, void, { rejectValue: string }>(
       localStorage.removeItem("hasSession");
       clearAuthHeader();
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response?.data?.data || error.message);
     }
   }
 );
@@ -75,6 +75,6 @@ export const refresh = createAsyncThunk<
 
     return response.data;
   } catch (error: any) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.response?.data?.data || error.message);
   }
 });

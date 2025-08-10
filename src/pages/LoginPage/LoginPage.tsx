@@ -1,4 +1,5 @@
 import LoginForm from "../../components/LoginForm/LoginForm";
+import ShinyText from "../../components/ShinyText/ShinyText";
 import DocumentTitle from "../../DocumentTitle";
 
 const LoginPage = () => {
@@ -6,10 +7,15 @@ const LoginPage = () => {
     <>
       <DocumentTitle>Login</DocumentTitle>
 
-      <h1 className="font-sans font-bold mt-12">Hello again!</h1>
-      <p className="max-w-[150px] m-auto mt-4">
-        Welcome back you’ve been missed!
-      </p>
+      <div>
+        <ShinyText
+          text="Hello again!"
+          disabled={false}
+          speed={3}
+          className="font-sans font-bold text-2xl mt-12 mb-12"
+        />
+      </div>
+
       <LoginForm />
     </>
   );

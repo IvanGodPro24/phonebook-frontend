@@ -1,4 +1,5 @@
 import RegistrationForm from "../../components/RegistrationForm/RegistrationForm";
+import ShinyText from "../../components/ShinyText/ShinyText";
 import DocumentTitle from "../../DocumentTitle";
 
 const RegistrationPage = () => {
@@ -6,7 +7,15 @@ const RegistrationPage = () => {
     <>
       <DocumentTitle>Registration</DocumentTitle>
 
-      <h1 className="font-sans font-bold mt-12">Join Us!</h1>
+      <div>
+        <ShinyText
+          text="Join Us!"
+          disabled={false}
+          speed={3}
+          className="font-sans font-bold text-2xl mt-12 mb-12"
+        />
+      </div>
+
       <RegistrationForm />
     </>
   );

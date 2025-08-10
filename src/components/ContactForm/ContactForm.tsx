@@ -101,7 +101,7 @@ const ContactForm = () => {
         <ErrorMessage
           name="name"
           component="span"
-          className="error"
+          className="mt-1 text-sm text-red-400"
         ></ErrorMessage>
 
         <label htmlFor={phoneNumberId}>Number</label>
@@ -117,7 +117,7 @@ const ContactForm = () => {
         <ErrorMessage
           name="phoneNumber"
           component="span"
-          className="error"
+          className="mt-1 text-sm text-red-400"
         ></ErrorMessage>
 
         <label htmlFor={emailId}>Email</label>
@@ -134,7 +134,7 @@ const ContactForm = () => {
         <ErrorMessage
           name="email"
           component="span"
-          className="error"
+          className="mt-1 text-sm text-red-400"
         ></ErrorMessage>
 
         <label htmlFor={contactTypeId}>Contact Type</label>

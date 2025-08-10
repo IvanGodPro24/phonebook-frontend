@@ -31,12 +31,6 @@ const slice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(register.fulfilled, () => {
-        toast.success("Successfully registered a user!");
-      })
-      .addCase(register.rejected, () => {
-        toast.error("Register error!");
-      })
       .addCase(login.fulfilled, handleAuthentication)
       .addCase(logout.fulfilled, (state) => {
         state.user = { name: null, email: null };
