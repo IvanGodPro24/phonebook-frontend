@@ -21,10 +21,11 @@ const InputField = ({
         {...(field as any)}
         {...props}
         className={clsx(
-          "w-full text-sm p-2.5 rounded-xl bg-[#3a3a3a] text-[var(--white)] focus:outline-none",
+          "w-full text-sm p-2.5 pr-7 rounded-xl bg-[#3a3a3a] text-[var(--white)] focus:outline-none",
           {
             "border border-red-500": isError,
             "border border-green-500": isSuccess,
+            "pr-12": isPassword,
           }
         )}
       />

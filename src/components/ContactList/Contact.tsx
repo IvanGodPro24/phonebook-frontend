@@ -8,20 +8,15 @@ import { toast } from "sonner";
 import { ChangeEvent, useId, useState } from "react";
 import clsx from "clsx";
 
-import {
-  Button,
-  Checkbox,
-  Field as HField,
-  Label,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  Select,
-} from "@headlessui/react";
+import { Checkbox, Field as HField, Label, Select } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
 import { ContactHandle } from "../../redux/contacts/contacts.types";
 import { selectContacts } from "../../redux/contacts/selectors";
 import { existedContact } from "../../utils/contactUtils";
+import useModal from "../../hooks/useModal";
+import Modal from "../Modal/Modal";
+import CustomLoader from "../CustomLoader/CustomLoader";
+import CustomButton from "../CustomButton/CustomButton";
 
 const Contact = ({
   _id,
@@ -49,7 +44,10 @@ const Contact = ({
   const [editedFavourite, setEditedFavourite] = useState(isFavourite);
   const [editedType, setEditedType] = useState(contactType);
   const [editedPhoto, setEditedPhoto] = useState<File | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isEditLoading, setEditIsLoading] = useState(false);
+
+  const { isOpen, openModal, closeModal } = useModal();
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -57,55 +55,71 @@ const Contact = ({
     }
   };
 
-  const open = () => setIsOpen(true);
+  const handleDelete = async () => {
+    setIsLoading(true);
+    try {
+      await dispatch(deleteContact(_id)).unwrap();
 
-  const close = () => setIsOpen(false);
-
-  const handleDelete = () => {
-    dispatch(deleteContact(_id));
-
-    toast.info("Contact has been deleted!");
+      toast.info("Contact has been deleted!");
+    } catch (error: any) {
+      toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleEdit = () => setIsEditing(true);
 
-  const handleSave = () => {
-    if (
-      editedName.trim().toLowerCase() === name.toLowerCase() &&
-      editedNumber.trim() === phoneNumber.trim() &&
-      editedFavourite === isFavourite &&
-      editedEmail?.trim() === email?.trim() &&
-      editedType === contactType &&
-      !editedPhoto
-    ) {
-      setIsEditing(false);
-      return;
-    }
+  const handleSave = async () => {
+    setEditIsLoading(true);
+    try {
+      if (
+        editedName.trim().toLowerCase() === name.toLowerCase() &&
+        editedNumber.trim() === phoneNumber.trim() &&
+        editedFavourite === isFavourite &&
+        editedEmail?.trim() === email?.trim() &&
+        editedType === contactType &&
+        !editedPhoto
+      ) {
+        setIsEditing(false);
+        return;
+      }
 
-    if (
-      existedContact(contacts, editedName, editedNumber, editedEmail || "", _id)
-    ) {
-      toast.info(
-        "Another contact with the same name or number already exists."
+      if (
+        existedContact(
+          contacts,
+          editedName,
+          editedNumber,
+          editedEmail || "",
+          _id
+        )
+      ) {
+        toast.info(
+          "Another contact with the same name or number already exists."
+        );
+        return;
+      }
+
+      dispatch(
+        editContact({
+          _id,
+          name: editedName,
+          phoneNumber: editedNumber,
+          email: editedEmail && editedEmail.trim() !== "" ? editedEmail : null,
+          isFavourite: editedFavourite,
+          contactType: editedType,
+          photo: editedPhoto || photo,
+        })
       );
-      return;
+
+      toast.success("Contact has been edited!");
+
+      setIsEditing(false);
+    } catch (error: any) {
+      toast.error(error);
+    } finally {
+      setEditIsLoading(false);
     }
-
-    dispatch(
-      editContact({
-        _id,
-        name: editedName,
-        phoneNumber: editedNumber,
-        email: editedEmail && editedEmail.trim() !== "" ? editedEmail : null,
-        isFavourite: editedFavourite,
-        contactType: editedType,
-        photo: editedPhoto || photo,
-      })
-    );
-
-    toast.success("Contact has been edited!");
-
-    setIsEditing(false);
   };
 
   return (
@@ -205,13 +219,17 @@ const Contact = ({
             <Label>Favourite</Label>
           </HField>
 
-          <button
-            type="button"
-            className="text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-            onClick={handleSave}
-          >
-            Save
-          </button>
+          {isEditLoading ? (
+            <CustomLoader />
+          ) : (
+            <button
+              type="button"
+              className="text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+              onClick={handleSave}
+            >
+              Save
+            </button>
+          )}
         </div>
       ) : (
         <>
@@ -247,56 +265,21 @@ const Contact = ({
               <p>{contactType}</p>
             </div>
           </div>
-
           <div className="flex gap-3">
-            <button type="button" className="" onClick={open}>
-              Delete
-            </button>
+            <CustomButton onClick={openModal}>Delete</CustomButton>
 
-            <button type="button" className="" onClick={handleEdit}>
-              Edit
-            </button>
+            <CustomButton onClick={handleEdit}>Edit</CustomButton>
           </div>
 
-          <Dialog
-            open={isOpen}
-            as="div"
-            className="relative z-10 focus:outline-none"
-            onClose={close}
-          >
-            <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-              <div className="flex min-h-full items-center justify-center p-4">
-                <DialogPanel
-                  transition
-                  className="w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
-                >
-                  <DialogTitle
-                    as="h3"
-                    className="text-base/7 font-medium text-white"
-                  >
-                    Are you sure?
-                  </DialogTitle>
-                  <p className="mt-2 text-sm/6 text-white/50">
-                    Your contact will be deleted completely.
-                  </p>
-                  <div className="mt-4 flex gap-2 justify-between">
-                    <Button
-                      className="text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-                      onClick={handleDelete}
-                    >
-                      OK
-                    </Button>
-                    <Button
-                      className="text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-                      onClick={close}
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                </DialogPanel>
-              </div>
-            </div>
-          </Dialog>
+          <Modal
+            title="Are you sure?"
+            text="Your contact will be deleted completely."
+            confirm="Delete"
+            isOpen={isOpen}
+            closeModal={closeModal}
+            isLoading={isLoading}
+            onClick={handleDelete}
+          />
         </>
       )}
     </>
