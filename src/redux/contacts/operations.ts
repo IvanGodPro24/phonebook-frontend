@@ -12,7 +12,7 @@ export const fetchContacts = createAsyncThunk<
 
     return response.data.contacts;
   } catch (error: any) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.response?.data?.data || error.message);
   }
 });
 
@@ -35,7 +35,7 @@ export const addContact = createAsyncThunk<
 
     return response.data;
   } catch (error: any) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.response?.data?.data || error.message);
   }
 });
 
@@ -49,7 +49,7 @@ export const deleteContact = createAsyncThunk<
 
     return response.data;
   } catch (error: any) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.response?.data?.data || error.message);
   }
 });
 
@@ -77,7 +77,7 @@ export const editContact = createAsyncThunk<
 
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response?.data?.data || error.message);
     }
   }
 );

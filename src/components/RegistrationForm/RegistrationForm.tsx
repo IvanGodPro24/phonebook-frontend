@@ -54,7 +54,9 @@ const RegistrationForm = () => {
       onSubmit={handleSubmit}
       validationSchema={registrationSchema}
     >
-      {({ isSubmitting }) => <FormComponent isSubmitting={isSubmitting} />}
+      {({ isSubmitting }) => (
+        <FormComponent isSubmitting={isSubmitting} isAuth={true} />
+      )}
     </Formik>
   );
 };

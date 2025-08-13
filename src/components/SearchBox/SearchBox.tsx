@@ -14,14 +14,14 @@ const SearchBox = () => {
 
   return (
     <div className="flex justify-center items-center gap-4 mb-12">
-      <label htmlFor={searchId}>Find contacts</label>
+      <label htmlFor={searchId} />
       <input
         type="text"
         name="filter"
+        placeholder="Search contacts..."
         id={searchId}
         value={query}
-        className="mt-3 block rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white 
-        focus:outline-2 focus:outline-offset-2 focus:outline-white/25"
+        className="max-w-3xs border border-[#353535] outline-none py-[11px] px-[23px] rounded-full text-[#979797] shadow-[inset_0_-23px_25px_rgba(136,136,136,0.17),inset_0_-36px_30px_rgba(81,81,81,0.23),inset_0_-79px_40px_rgba(0,0,0,0.1),0_2px_1px_rgba(0,0,0,0.06),0_4px_2px_rgba(0,0,0,0.09),0_8px_4px_rgba(0,0,0,0.09),0_16px_8px_rgba(0,0,0,0.09),0_32px_16px_rgba(0,0,0,0.09)]"
         onChange={handleFilter}
       />
     </div>

@@ -49,7 +49,11 @@ const LoginForm = () => {
       validationSchema={loginSchema}
     >
       {({ isSubmitting }) => (
-        <FormComponent isLogIn={true} isSubmitting={isSubmitting} />
+        <FormComponent
+          isLogIn={true}
+          isSubmitting={isSubmitting}
+          isAuth={true}
+        />
       )}
     </Formik>
   );

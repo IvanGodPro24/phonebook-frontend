@@ -7,6 +7,7 @@ import Loader from "../../components/Loader/Loader";
 import ContactList from "../../components/ContactList/ContactList";
 import { fetchContacts } from "../../redux/contacts/operations";
 import { selectError, selectLoading } from "../../redux/contacts/selectors";
+import ShinyText from "../../components/ShinyText/ShinyText";
 
 const ContactsPage = () => {
   const dispatch = useAppDispatch();
@@ -22,11 +23,20 @@ const ContactsPage = () => {
     <>
       <DocumentTitle>Your Contacts</DocumentTitle>
 
-      <div className='mt-16 mb-16'>
-        <h1 className="font-bold">Phonebook</h1>
+      <div>
+        <div>
+          <ShinyText
+            text="Stay in Touch"
+            disabled={false}
+            speed={3}
+            className="font-sans font-bold text-2xl mt-12 mb-12"
+          />
+        </div>
 
-        <ContactForm />
-        <SearchBox />
+        <div className="flex flex-col justify-center items-center gap-12">
+          <ContactForm />
+          <SearchBox />
+        </div>
 
         {loading ? <Loader /> : <ContactList />}
         {error && <p>{error}</p>}

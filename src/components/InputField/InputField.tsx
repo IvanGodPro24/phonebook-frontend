@@ -9,19 +9,20 @@ const InputField = ({
   isVisible,
   onVisible,
   isPassword,
+  icon,
   ...props
 }: InputFieldProps) => {
   const [field, meta] = useField(props);
   const isError = meta.touched && meta.error;
-  const isSuccess = meta.touched && !isError;
+  const isSuccess = meta.touched && !isError && field.value?.trim() !== "";
 
   return (
-    <div className="relative w-full">
+    <label htmlFor={props.id} className="relative w-full">
       <Field
         {...(field as any)}
         {...props}
         className={clsx(
-          "w-full text-sm p-2.5 pr-7 rounded-xl bg-[#3a3a3a] text-[var(--white)] focus:outline-none",
+          "w-full py-2.5 pl-9 pr-7 rounded-xl bg-[#3a3a3a] text-[var(--white)] focus:outline-none",
           {
             "border border-red-500": isError,
             "border border-green-500": isSuccess,
@@ -29,6 +30,8 @@ const InputField = ({
           }
         )}
       />
+
+      {icon}
 
       {isPassword && (
         <button
@@ -52,7 +55,7 @@ const InputField = ({
       ) : isSuccess ? (
         <IoIosCheckmarkCircle className="absolute top-1/2 right-0 transform -translate-y-1/2 -translate-x-1/2 text-green-500" />
       ) : null}
-    </div>
+    </label>
   );
 };
 
