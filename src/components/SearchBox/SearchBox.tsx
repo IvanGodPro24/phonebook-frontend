@@ -13,7 +13,7 @@ const SearchBox = () => {
     dispatch(changeFilter(e.target.value));
 
   return (
-    <div className="flex justify-center items-center gap-4 mb-12">
+    <div className="flex justify-center items-center mb-12">
       <label htmlFor={searchId} />
       <input
         type="text"

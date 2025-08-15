@@ -1,4 +1,5 @@
 import Select, { MultiValue, SingleValue, StylesConfig } from "react-select";
+import { useField } from "formik";
 import { useId } from "react";
 import clsx from "clsx";
 import { CustomSelectProps } from "./CustomSelect.types";
@@ -71,57 +72,50 @@ const customStyles: StylesConfig<StringOptions> = {
   }),
 };
 
-const CustomSelect = ({
-  name,
-  options,
-  placeholder,
-  onChange,
-  value,
-}: CustomSelectProps) => {
+const CustomSelect = ({ name, options, placeholder }: CustomSelectProps) => {
   const id = useId();
+  const [field, , helpers] = useField(name);
 
   const handleChange = (
     newValue: SingleValue<StringOptions> | MultiValue<StringOptions>
   ) => {
     const singleValue = newValue as SingleValue<StringOptions>;
-    onChange(singleValue?.value || "");
+    helpers.setValue(singleValue?.value || "");
   };
 
   return (
-    <>
-      <label htmlFor={id} className="relative w-full">
-        <Select
-          name={name}
-          options={options}
-          styles={customStyles}
-          isSearchable={false}
-          value={value}
-          onChange={handleChange}
-          inputId={id}
-          placeholder={placeholder}
-          components={{
-            DropdownIndicator: ({ innerProps, selectProps }) => (
-              <div
-                {...innerProps}
-                className={clsx()}
-                style={{
-                  transition: "transform 0.3s ease",
-                  transform: selectProps.menuIsOpen
-                    ? "rotate(180deg)"
-                    : "rotate(0deg)",
-                }}
-              >
-                <ChevronIcon size={24} />
-              </div>
-            ),
-          }}
-        />
-        <WorkflowIcon
-          className="absolute top-1/2 left-4 transform -translate-y-1/2 -translate-x-1/2 cursor-pointer"
-          size={24}
-        />
-      </label>
-    </>
+    <label htmlFor={id} className="relative w-full">
+      <Select
+        name={name}
+        options={options}
+        styles={customStyles}
+        isSearchable={false}
+        value={options.find((opt) => opt.value === field.value)}
+        onChange={handleChange}
+        inputId={id}
+        placeholder={placeholder}
+        components={{
+          DropdownIndicator: ({ innerProps, selectProps }) => (
+            <div
+              {...innerProps}
+              className={clsx()}
+              style={{
+                transition: "transform 0.3s ease",
+                transform: selectProps.menuIsOpen
+                  ? "rotate(180deg)"
+                  : "rotate(0deg)",
+              }}
+            >
+              <ChevronIcon size={24} />
+            </div>
+          ),
+        }}
+      />
+      <WorkflowIcon
+        className="absolute top-1/2 left-4 transform -translate-y-1/2 -translate-x-1/2 cursor-pointer"
+        size={24}
+      />
+    </label>
   );
 };
 

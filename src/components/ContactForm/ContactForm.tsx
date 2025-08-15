@@ -1,7 +1,5 @@
 import { ChangeEvent, useId, useRef, useState } from "react";
 import * as Yup from "yup";
-import { Checkbox, Field, Label } from "@headlessui/react";
-import { CheckIcon } from "@heroicons/react/16/solid";
 import { Formik, FormikHelpers } from "formik";
 import FormComponent from "../FormComponent/FormComponent";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
@@ -19,6 +17,7 @@ import { EarthIcon } from "../EarthIcon/EarthIcon";
 import { EmailIcon } from "../EmailIcon/EmailIcon";
 import { typeOptions } from "../../constants/constants";
 import InputField from "../InputField/InputField";
+import CustomCheckbox from "../CustomCheckbox/CustomCheckbox";
 
 const ContactSchema: Yup.ObjectSchema<ContactFormProps> = Yup.object().shape({
   name: Yup.string()
@@ -35,12 +34,16 @@ const ContactSchema: Yup.ObjectSchema<ContactFormProps> = Yup.object().shape({
       if (!value || value.trim() === "") return true;
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
     }),
+  type: Yup.string().required(),
+  isFavourite: Yup.boolean().required(),
 });
 
 const initialValues: ContactFormProps = {
   name: "",
   phoneNumber: "",
   email: "",
+  type: "home",
+  isFavourite: false,
 };
 
 const ContactForm = () => {
@@ -54,8 +57,6 @@ const ContactForm = () => {
 
   const photoRef = useRef<HTMLInputElement>(null);
 
-  const [type, setType] = useState("home");
-  const [enabled, setEnabled] = useState(false);
   const [photo, setPhoto] = useState<File | null>(null);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +66,7 @@ const ContactForm = () => {
   };
 
   const handleSubmit = async (
-    { name, phoneNumber, email }: ContactFormProps,
+    { name, phoneNumber, email, type, isFavourite }: ContactFormProps,
     { setSubmitting, resetForm }: FormikHelpers<ContactFormProps>
   ) => {
     try {
@@ -78,7 +79,7 @@ const ContactForm = () => {
         addContact({
           name,
           phoneNumber,
-          isFavourite: enabled,
+          isFavourite,
           contactType: type,
           photo,
           ...(email?.trim() !== "" && { email }),
@@ -147,23 +148,10 @@ const ContactForm = () => {
           <CustomSelect
             name="type"
             options={typeOptions}
-            value={typeOptions.find((option) => option.value === type)}
-            onChange={setType}
             placeholder="Contact type"
           />
 
-          <div className="relative w-full">
-            <Field className="flex items-center gap-2">
-              <Checkbox
-                checked={enabled}
-                onChange={setEnabled}
-                className="transition group size-6 rounded-md bg-white/10 p-1 ring-1 ring-white/15 cursor-pointer ring-inset data-[checked]:bg-white"
-              >
-                <CheckIcon className="hidden size-4 fill-black group-data-[checked]:block" />
-              </Checkbox>
-              <Label className="cursor-pointer">Mark as Favourite</Label>
-            </Field>
-          </div>
+          <CustomCheckbox name="isFavourite" label="Mark as Favourite" />
 
           <UploadPhoto ref={photoRef} onChange={handleFileChange} />
 

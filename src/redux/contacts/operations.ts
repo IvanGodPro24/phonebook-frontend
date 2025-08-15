@@ -70,7 +70,7 @@ export const editContact = createAsyncThunk<
       formData.append("phoneNumber", phoneNumber);
       formData.append("isFavourite", String(isFavourite));
       formData.append("contactType", contactType);
-      if (email) formData.append("email", email);
+      formData.append("email", email ?? "");
       if (photo instanceof File) formData.append("photo", photo);
 
       const response = await axios.patch(`/contacts/${_id}`, formData);

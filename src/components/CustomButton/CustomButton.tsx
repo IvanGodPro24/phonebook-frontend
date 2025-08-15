@@ -8,6 +8,7 @@ const CustomButton = ({
 }: CustomButtonProps) => {
   return (
     <button
+      type="submit"
       className={css["boton-elegante"]}
       onClick={onClick}
       disabled={isSubmitting}
