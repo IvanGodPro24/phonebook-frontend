@@ -7,6 +7,7 @@ import { deleteContact } from "../../redux/contacts/operations";
 import { toast } from "sonner";
 import { useState } from "react";
 import { ContactHandle } from "../../redux/contacts/contacts.types";
+import { AnimatePresence, motion } from "framer-motion";
 import useModal from "../../hooks/useModal";
 import Modal from "../Modal/Modal";
 import CustomButton from "../CustomButton/CustomButton";
@@ -47,70 +48,94 @@ const Contact = ({
 
   return (
     <SpotlightCard className="flex flex-col gap-5 sm:flex-row sm:justify-between sm:items-center">
-      {isEditing ? (
-        <ContactEditForm
-          _id={_id}
-          name={name}
-          phoneNumber={phoneNumber}
-          email={email}
-          isFavourite={isFavourite}
-          contactType={contactType}
-          photo={photo}
-          setIsEditing={setIsEditing}
-        />
-      ) : (
-        <>
-          <div className="flex flex-col gap-2.5">
-            {photo && (
-              <img src={photo} alt="photo" width="100" className="rounded-xl" />
-            )}
+      <AnimatePresence mode="wait">
+        {isEditing ? (
+          <motion.div
+            key="editForm"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.25 }}
+            className="w-full"
+          >
+            <ContactEditForm
+              _id={_id}
+              name={name}
+              phoneNumber={phoneNumber}
+              email={email}
+              isFavourite={isFavourite}
+              contactType={contactType}
+              photo={photo}
+              setIsEditing={setIsEditing}
+            />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="viewMode"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            className="flex flex-col sm:flex-row sm:justify-between sm:items-center w-full"
+          >
+            <div className="flex flex-col gap-2.5">
+              {photo && (
+                <img
+                  src={photo}
+                  alt="photo"
+                  width="100"
+                  className="rounded-xl"
+                />
+              )}
 
-            <div className="flex items-center gap-2.5">
-              <FaUser />
-              <p>{name}</p>
-            </div>
-
-            <div className="flex items-center gap-2.5">
-              <FaPhoneAlt />
-              <p>{phoneNumber}</p>
-            </div>
-
-            {email && (
               <div className="flex items-center gap-2.5">
-                <MdEmail />
-                <p>{email}</p>
+                <FaUser />
+                <p>{name}</p>
               </div>
-            )}
 
-            {isFavourite && (
               <div className="flex items-center gap-2.5">
-                <FaStar />
-                <p>Favourite</p>
+                <FaPhoneAlt />
+                <p>{phoneNumber}</p>
               </div>
-            )}
 
-            <div className="flex items-center gap-2.5">
-              <RiContactsBook2Fill />
-              <p>{contactType}</p>
+              {email && (
+                <div className="flex items-center gap-2.5">
+                  <MdEmail />
+                  <p>{email}</p>
+                </div>
+              )}
+
+              {isFavourite && (
+                <div className="flex items-center gap-2.5">
+                  <FaStar />
+                  <p>Favourite</p>
+                </div>
+              )}
+
+              <div className="flex items-center gap-2.5">
+                <RiContactsBook2Fill />
+                <p>{contactType}</p>
+              </div>
             </div>
-          </div>
-          <div className="flex justify-between gap-3">
-            <CustomButton onClick={openModal}>Delete</CustomButton>
 
-            <CustomButton onClick={handleEdit}>Edit</CustomButton>
-          </div>
+            <div className="flex justify-between gap-3 mt-4 sm:mt-0">
+              <CustomButton onClick={openModal}>Delete</CustomButton>
 
-          <Modal
-            title="Are you sure?"
-            text="Your contact will be deleted completely."
-            confirm="Delete"
-            isOpen={isOpen}
-            closeModal={closeModal}
-            isLoading={isLoading}
-            onClick={handleDelete}
-          />
-        </>
-      )}
+              <CustomButton onClick={handleEdit}>Edit</CustomButton>
+            </div>
+
+            <Modal
+              title="Are you sure?"
+              text="Your contact will be deleted completely."
+              confirm="Delete"
+              isOpen={isOpen}
+              closeModal={closeModal}
+              isLoading={isLoading}
+              onClick={handleDelete}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </SpotlightCard>
   );
 };
