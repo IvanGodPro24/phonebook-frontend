@@ -69,6 +69,7 @@ const ContactEditForm = ({
 
   const photoRef = useRef<HTMLInputElement>(null);
 
+  const [removePhoto, setRemovePhoto] = useState(false);
   const [editedPhoto, setEditedPhoto] = useState<File | null>(null);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -96,7 +97,8 @@ const ContactEditForm = ({
         editIsFavourite === isFavourite &&
         normalize(editEmail) === normalize(email) &&
         editType === contactType &&
-        !editedPhoto
+        !editedPhoto &&
+        !removePhoto
       ) {
         setIsEditing(false);
         return;
@@ -116,6 +118,7 @@ const ContactEditForm = ({
           isFavourite: editIsFavourite,
           contactType: editType,
           photo: editedPhoto || photo,
+          removePhoto,
         })
       ).unwrap();
 
@@ -194,23 +197,33 @@ const ContactEditForm = ({
                 alt="Preview"
                 className="w-24 h-24 object-cover rounded"
               />
-              {/* <CustomButton
+              <CustomButton
                 onClick={() => {
-                  setPhoto(null);
+                  setEditedPhoto(null);
                   if (photoRef.current) {
                     photoRef.current.value = "";
                   }
                 }}
               >
                 Remove
-              </CustomButton> */}
+              </CustomButton>
             </div>
-          ) : photo ? (
-            <img
-              src={photo}
-              alt="Contact"
-              className="w-24 h-24 object-cover rounded"
-            />
+          ) : photo && !removePhoto ? (
+            <div className="mt-2 flex items-center gap-2">
+              <img
+                src={photo}
+                alt="Contact"
+                className="w-24 h-24 object-cover rounded"
+              />
+              <CustomButton
+                type="button"
+                onClick={() => {
+                  setRemovePhoto(true);
+                }}
+              >
+                Clear
+              </CustomButton>
+            </div>
           ) : null}
 
           {isSubmitting ? (

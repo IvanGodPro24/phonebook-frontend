@@ -26,6 +26,7 @@ export type ContactEdit = {
   isFavourite: boolean;
   contactType: string;
   photo: File | null | string;
+  removePhoto: boolean;
 };
 
 export type ContactPost = {

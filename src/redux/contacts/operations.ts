@@ -60,7 +60,16 @@ export const editContact = createAsyncThunk<
 >(
   "contacts/editContact",
   async (
-    { _id, name, phoneNumber, email, isFavourite, contactType, photo },
+    {
+      _id,
+      name,
+      phoneNumber,
+      email,
+      isFavourite,
+      contactType,
+      photo,
+      removePhoto,
+    },
     { rejectWithValue }
   ) => {
     try {
@@ -71,6 +80,7 @@ export const editContact = createAsyncThunk<
       formData.append("isFavourite", String(isFavourite));
       formData.append("contactType", contactType);
       formData.append("email", email ?? "");
+      formData.append("removePhoto", String(!!removePhoto));
       if (photo instanceof File) formData.append("photo", photo);
 
       const response = await axios.patch(`/contacts/${_id}`, formData);
