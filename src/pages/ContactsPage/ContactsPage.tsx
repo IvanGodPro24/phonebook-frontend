@@ -8,6 +8,7 @@ import ContactList from "../../components/ContactList/ContactList";
 import { fetchContacts } from "../../redux/contacts/operations";
 import { selectError, selectLoading } from "../../redux/contacts/selectors";
 import ShinyText from "../../components/ShinyText/ShinyText";
+import Pagination from "../../components/Pagination/Pagination";
 
 const ContactsPage = () => {
   const dispatch = useAppDispatch();
@@ -16,7 +17,7 @@ const ContactsPage = () => {
   const error = useAppSelector(selectError);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(fetchContacts({ page: 1, perPage: 10 }));
   }, [dispatch]);
 
   return (
@@ -40,6 +41,8 @@ const ContactsPage = () => {
 
         {loading ? <Loader /> : <ContactList />}
         {error && <p>{error}</p>}
+
+        <Pagination />
       </div>
     </>
   );

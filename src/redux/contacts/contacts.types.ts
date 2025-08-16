@@ -8,6 +8,21 @@ export type Contact = {
   photo: string;
 };
 
+export type ContactData = {
+  contacts: Contact[];
+  page: number;
+  perPage: number;
+  totalItems: number;
+  totalPages: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+};
+
+export type FetchContacts = {
+  page: number;
+  perPage: number;
+};
+
 export type ContactHandle = {
   _id: string;
   name: string;
@@ -42,4 +57,14 @@ export type ContactState = {
   items: Contact[];
   loading: boolean;
   error: string | null;
+  pagination: Pagination;
+};
+
+export type Pagination = {
+  page: number;
+  perPage: number;
+  totalItems: number;
+  totalPages: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
 };

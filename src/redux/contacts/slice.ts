@@ -21,6 +21,14 @@ const initialState: ContactState = {
   items: [],
   loading: false,
   error: null,
+  pagination: {
+    page: 1,
+    perPage: 10,
+    totalItems: 0,
+    totalPages: 1,
+    hasPreviousPage: false,
+    hasNextPage: false,
+  },
 };
 
 const slice = createSlice({
@@ -35,7 +43,15 @@ const slice = createSlice({
       .addCase(fetchContacts.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.items = action.payload;
+        state.items = action.payload.contacts;
+         state.pagination = {
+           page: action.payload.page,
+           perPage: action.payload.perPage,
+           totalItems: action.payload.totalItems,
+           totalPages: action.payload.totalPages,
+           hasNextPage: action.payload.hasNextPage,
+           hasPreviousPage: action.payload.hasPreviousPage,
+         };
       })
 
       .addCase(addContact.fulfilled, (state, action) => {
