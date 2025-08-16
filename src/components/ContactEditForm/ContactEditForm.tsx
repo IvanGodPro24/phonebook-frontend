@@ -229,7 +229,7 @@ const ContactEditForm = ({
           {isSubmitting ? (
             <CustomLoader />
           ) : (
-            <CustomButton isSubmitting={isSubmitting}>Save</CustomButton>
+            <CustomButton disabled={isSubmitting}>Save</CustomButton>
           )}
         </Form>
       )}

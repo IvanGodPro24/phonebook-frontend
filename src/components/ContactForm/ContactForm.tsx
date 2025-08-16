@@ -178,7 +178,7 @@ const ContactForm = () => {
           {isSubmitting ? (
             <CustomLoader />
           ) : (
-            <CustomButton isSubmitting={isSubmitting}>Add contact</CustomButton>
+            <CustomButton disabled={isSubmitting}>Add contact</CustomButton>
           )}
         </FormComponent>
       )}

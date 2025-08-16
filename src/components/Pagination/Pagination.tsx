@@ -1,9 +1,13 @@
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import useDevice from "../../hooks/useDevice";
 import { fetchContacts } from "../../redux/contacts/operations";
 import { selectPagination } from "../../redux/contacts/selectors";
+import CustomButton from "../CustomButton/CustomButton";
 
 const Pagination = () => {
   const dispatch = useAppDispatch();
+
+  const { isMobile } = useDevice();
 
   const { page, totalPages, hasNextPage, hasPreviousPage } =
     useAppSelector(selectPagination);
@@ -12,27 +16,43 @@ const Pagination = () => {
     dispatch(fetchContacts({ page: newPage, perPage: 10 }));
   };
 
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
   return (
-    <div className="flex items-center justify-center gap-3 mt-6">
-      <button
-        disabled={!hasPreviousPage}
+    <div className="flex justify-center items-center gap-3 mt-6 mb-12">
+      <CustomButton
         onClick={() => handlePageChange(page - 1)}
-        className="px-3 py-1 rounded bg-gray-700 text-white disabled:opacity-50"
+        disabled={!hasPreviousPage}
       >
         Prev
-      </button>
+      </CustomButton>
 
-      <span className="text-white">
-        {page} / {totalPages}
-      </span>
+      {!isMobile &&
+        pages.map((p) => (
+          <CustomButton
+            key={p}
+            onClick={() => handlePageChange(p)}
+            isPage={true}
+            isActive={p === page}
+          >
+            {p}
+          </CustomButton>
+        ))}
 
-      <button
-        disabled={!hasNextPage}
+      {isMobile && (
+        <span className="inline-flex items-center justify-center px-4 py-2 text-base font-semibold rounded-full bg-white/5 border border-white/10 text-white/90">
+          <span className="text-white">{page}</span>
+          <span className="mx-1 text-white/50">/</span>
+          <span>{totalPages}</span>
+        </span>
+      )}
+
+      <CustomButton
         onClick={() => handlePageChange(page + 1)}
-        className="px-3 py-1 rounded bg-gray-700 text-white disabled:opacity-50"
+        disabled={!hasNextPage}
       >
         Next
-      </button>
+      </CustomButton>
     </div>
   );
 };

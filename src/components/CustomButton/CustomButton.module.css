@@ -11,6 +11,10 @@
   transition: all 0.4s ease;
 }
 
+.page {
+  padding: 8px 15px;
+}
+
 .boton-elegante::after {
   content: "";
   position: absolute;
@@ -34,6 +38,37 @@
 .boton-elegante:hover {
   border-color: #666666;
   background: #292929;
+}
+
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #1a1a1a;
+  border-color: #2c2c2c;
+}
+
+.disabled::after {
+  content: none;
+}
+
+.disabled:hover {
+  border-color: #2c2c2c;
+  background-color: #1a1a1a;
+}
+
+.active {
+  background-color: #333333;
+  border-color: #444444;
+}
+
+.active:hover {
+  background-color: #333333;
+  border-color: #444444;
+}
+
+.active::after {
+  transform: scale(1.5);
+  opacity: 0.5;
 }
 
 @media (max-width: 767px) {
