@@ -2,8 +2,12 @@ import { FaUser } from "react-icons/fa6";
 import { FaPhoneAlt, FaStar } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RiContactsBook2Fill } from "react-icons/ri";
-import { useAppDispatch } from "../../hooks/hooks";
-import { deleteContact } from "../../redux/contacts/operations";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { deleteContact, fetchContacts } from "../../redux/contacts/operations";
+import {
+  selectContacts,
+  selectPagination,
+} from "../../redux/contacts/selectors";
 import { toast } from "sonner";
 import { useState } from "react";
 import { ContactHandle } from "../../redux/contacts/contacts.types";
@@ -25,6 +29,9 @@ const Contact = ({
 }: ContactHandle) => {
   const dispatch = useAppDispatch();
 
+  const contacts = useAppSelector(selectContacts);
+  const { page, perPage } = useAppSelector(selectPagination);
+
   const [isEditing, setIsEditing] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +42,10 @@ const Contact = ({
     setIsLoading(true);
     try {
       await dispatch(deleteContact(_id)).unwrap();
+
+      const targetPage = contacts.length === 1 && page > 1 ? page - 1 : page;
+
+      await dispatch(fetchContacts({ page: targetPage, perPage })).unwrap();
 
       toast.info("Contact has been deleted!");
     } catch (error: any) {

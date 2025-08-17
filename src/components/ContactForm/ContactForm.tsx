@@ -3,9 +3,12 @@ import * as Yup from "yup";
 import { Formik, FormikHelpers } from "formik";
 import FormComponent from "../FormComponent/FormComponent";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { addContact } from "../../redux/contacts/operations";
+import { addContact, fetchContacts } from "../../redux/contacts/operations";
 import { toast } from "sonner";
-import { selectContacts } from "../../redux/contacts/selectors";
+import {
+  selectContacts,
+  selectPagination,
+} from "../../redux/contacts/selectors";
 import { ContactFormProps } from "./ContactForm.types";
 import { existedContact } from "../../utils/contactUtils";
 import CustomLoader from "../CustomLoader/CustomLoader";
@@ -50,6 +53,7 @@ const ContactForm = () => {
   const dispatch = useAppDispatch();
 
   const contacts = useAppSelector(selectContacts);
+  const { page, totalItems, perPage } = useAppSelector(selectPagination);
 
   const nameId = useId();
   const phoneNumberId = useId();
@@ -85,6 +89,16 @@ const ContactForm = () => {
           ...(email?.trim() !== "" && { email }),
         })
       ).unwrap();
+
+      const newTotalPages = Math.ceil((totalItems + 1) / perPage);
+
+      let targetPage = page;
+
+      if (contacts.length >= perPage) {
+        targetPage = newTotalPages;
+      }
+
+      await dispatch(fetchContacts({ page: targetPage, perPage })).unwrap();
 
       toast.success("Contact has been added!");
 

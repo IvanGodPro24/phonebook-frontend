@@ -44,14 +44,14 @@ const slice = createSlice({
         state.loading = false;
         state.error = null;
         state.items = action.payload.contacts;
-         state.pagination = {
-           page: action.payload.page,
-           perPage: action.payload.perPage,
-           totalItems: action.payload.totalItems,
-           totalPages: action.payload.totalPages,
-           hasNextPage: action.payload.hasNextPage,
-           hasPreviousPage: action.payload.hasPreviousPage,
-         };
+        state.pagination = {
+          page: action.payload.page,
+          perPage: action.payload.perPage,
+          totalItems: action.payload.totalItems,
+          totalPages: action.payload.totalPages,
+          hasNextPage: action.payload.hasNextPage,
+          hasPreviousPage: action.payload.hasPreviousPage,
+        };
       })
 
       .addCase(addContact.fulfilled, (state, action) => {

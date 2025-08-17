@@ -7,11 +7,15 @@ import Loader from "../../components/Loader/Loader";
 import ContactList from "../../components/ContactList/ContactList";
 import { fetchContacts } from "../../redux/contacts/operations";
 import { selectError, selectLoading } from "../../redux/contacts/selectors";
+import { selectFilteredContacts } from "../../redux/filters/selectors";
 import ShinyText from "../../components/ShinyText/ShinyText";
+import ScrambledText from "../../components/ScrambledText/ScrambledText";
 import Pagination from "../../components/Pagination/Pagination";
 
 const ContactsPage = () => {
   const dispatch = useAppDispatch();
+
+  const contacts = useAppSelector(selectFilteredContacts);
 
   const loading = useAppSelector(selectLoading);
   const error = useAppSelector(selectError);
@@ -39,10 +43,24 @@ const ContactsPage = () => {
           <SearchBox />
         </div>
 
-        {loading ? <Loader /> : <ContactList />}
-        {error && <p>{error}</p>}
-
-        <Pagination />
+        {!loading && contacts.length === 0 ? (
+          <ScrambledText
+            className="scrambled-text-demo m-auto mb-20"
+            radius={100}
+            duration={1.2}
+            speed={0.5}
+          >
+            <p className="text-xl text-[var(--white-600)]">
+              No contacts found. Please add some contacts or adjust your search.
+            </p>
+          </ScrambledText>
+        ) : (
+          <>
+            {loading ? <Loader /> : <ContactList />}
+            {error && <p className="mt-5 mb-5">{error}</p>}
+            <Pagination />
+          </>
+        )}
       </div>
     </>
   );

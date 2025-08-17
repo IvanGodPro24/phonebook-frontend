@@ -9,11 +9,11 @@ const Pagination = () => {
 
   const { isMobile } = useDevice();
 
-  const { page, totalPages, hasNextPage, hasPreviousPage } =
+  const { page, perPage, totalPages, hasNextPage, hasPreviousPage } =
     useAppSelector(selectPagination);
 
   const handlePageChange = (newPage: number) => {
-    dispatch(fetchContacts({ page: newPage, perPage: 10 }));
+    dispatch(fetchContacts({ page: newPage, perPage }));
   };
 
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
