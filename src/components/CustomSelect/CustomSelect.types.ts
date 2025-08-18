@@ -1,7 +1,10 @@
-import { StringOptions } from "../../constants/constants.types";
+import { BooleanOptions, StringOptions } from "../../constants/constants.types";
 
 export type CustomSelectProps = {
   name: string;
-  options: StringOptions[];
+  options: OptionType[];
   placeholder: string;
+  isClearable?: boolean;
 };
+
+export type OptionType = StringOptions | BooleanOptions;

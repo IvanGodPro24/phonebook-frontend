@@ -14,10 +14,10 @@ export const fetchContacts = createAsyncThunk<
   { rejectValue: string }
 >(
   "contacts/fetchAll",
-  async ({ page = 1, perPage = 10 }, { rejectWithValue }) => {
+  async ({ page = 1, perPage = 10, filters = {} }, { rejectWithValue }) => {
     try {
       const response = await axios.get("/contacts", {
-        params: { page, perPage },
+        params: { page, perPage, ...filters },
       });
 
       return response.data;
@@ -31,24 +31,30 @@ export const addContact = createAsyncThunk<
   Contact,
   ContactPost,
   { rejectValue: string }
->("contacts/addContact", async (contact, { rejectWithValue }) => {
-  try {
-    const formData = new FormData();
+>(
+  "contacts/addContact",
+  async (
+    { name, phoneNumber, email, isFavourite, contactType, photo },
+    { rejectWithValue }
+  ) => {
+    try {
+      const formData = new FormData();
 
-    formData.append("name", contact.name);
-    formData.append("phoneNumber", contact.phoneNumber);
-    formData.append("isFavourite", String(contact.isFavourite));
-    formData.append("contactType", contact.contactType);
-    if (contact.email) formData.append("email", contact.email);
-    if (contact.photo) formData.append("photo", contact.photo);
+      formData.append("name", name);
+      formData.append("phoneNumber", phoneNumber);
+      formData.append("isFavourite", String(isFavourite));
+      formData.append("contactType", contactType);
+      if (email) formData.append("email", email);
+      if (photo) formData.append("photo", photo);
 
-    const response = await axios.post("/contacts", formData);
+      const response = await axios.post("/contacts", formData);
 
-    return response.data;
-  } catch (error: any) {
-    return rejectWithValue(error.response?.data?.data || error.message);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.data || error.message);
+    }
   }
-});
+);
 
 export const deleteContact = createAsyncThunk<
   Contact,

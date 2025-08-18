@@ -1,13 +1,12 @@
 import Select, { MultiValue, SingleValue, StylesConfig } from "react-select";
 import { useField } from "formik";
 import { useId } from "react";
-import clsx from "clsx";
-import { CustomSelectProps } from "./CustomSelect.types";
-import { StringOptions } from "../../constants/constants.types";
+import { CustomSelectProps, OptionType } from "./CustomSelect.types";
 import { ChevronIcon } from "../ChevronIcon/ChevronIcon";
 import { WorkflowIcon } from "../WorkflowIcon/WorkflowIcon";
+import { XIcon } from "../XIcon/XIcon";
 
-const customStyles: StylesConfig<StringOptions> = {
+const customStyles: StylesConfig<OptionType> = {
   control: (provided) => ({
     ...provided,
     backgroundColor: "rgba(255, 255, 255, 0.05)",
@@ -17,6 +16,7 @@ const customStyles: StylesConfig<StringOptions> = {
     transition: "all 0.3s",
     boxShadow: "none",
     cursor: "pointer",
+    textAlign: "left",
     "&:hover": {
       border: "none",
     },
@@ -72,15 +72,20 @@ const customStyles: StylesConfig<StringOptions> = {
   }),
 };
 
-const CustomSelect = ({ name, options, placeholder }: CustomSelectProps) => {
+const CustomSelect = ({
+  name,
+  options,
+  placeholder,
+  isClearable = false,
+}: CustomSelectProps) => {
   const id = useId();
   const [field, , helpers] = useField(name);
 
   const handleChange = (
-    newValue: SingleValue<StringOptions> | MultiValue<StringOptions>
+    newValue: SingleValue<OptionType> | MultiValue<OptionType>
   ) => {
-    const singleValue = newValue as SingleValue<StringOptions>;
-    helpers.setValue(singleValue?.value || "");
+    const singleValue = newValue as SingleValue<OptionType>;
+    helpers.setValue(singleValue?.value);
   };
 
   return (
@@ -94,11 +99,11 @@ const CustomSelect = ({ name, options, placeholder }: CustomSelectProps) => {
         onChange={handleChange}
         inputId={id}
         placeholder={placeholder}
+        isClearable={isClearable}
         components={{
           DropdownIndicator: ({ innerProps, selectProps }) => (
             <div
               {...innerProps}
-              className={clsx()}
               style={{
                 transition: "transform 0.3s ease",
                 transform: selectProps.menuIsOpen
@@ -107,6 +112,11 @@ const CustomSelect = ({ name, options, placeholder }: CustomSelectProps) => {
               }}
             >
               <ChevronIcon size={24} />
+            </div>
+          ),
+          ClearIndicator: ({ innerProps }) => (
+            <div {...innerProps}>
+              <XIcon size={24} />
             </div>
           ),
         }}

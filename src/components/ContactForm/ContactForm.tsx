@@ -7,6 +7,7 @@ import { addContact, fetchContacts } from "../../redux/contacts/operations";
 import { toast } from "sonner";
 import {
   selectContacts,
+  selectFilters,
   selectPagination,
 } from "../../redux/contacts/selectors";
 import { ContactFormProps } from "./ContactForm.types";
@@ -54,6 +55,7 @@ const ContactForm = () => {
 
   const contacts = useAppSelector(selectContacts);
   const { page, totalItems, perPage } = useAppSelector(selectPagination);
+  const filters = useAppSelector(selectFilters);
 
   const nameId = useId();
   const phoneNumberId = useId();
@@ -98,7 +100,9 @@ const ContactForm = () => {
         targetPage = newTotalPages;
       }
 
-      await dispatch(fetchContacts({ page: targetPage, perPage })).unwrap();
+      await dispatch(
+        fetchContacts({ page: targetPage, perPage, filters })
+      ).unwrap();
 
       toast.success("Contact has been added!");
 

@@ -1,3 +1,5 @@
+import { FilterType } from "../../components/FilterForm/FilterForm.types";
+
 export type Contact = {
   _id: string;
   name: string;
@@ -21,6 +23,7 @@ export type ContactData = {
 export type FetchContacts = {
   page: number;
   perPage: number;
+  filters: FilterType;
 };
 
 export type ContactHandle = {
@@ -58,6 +61,7 @@ export type ContactState = {
   loading: boolean;
   error: string | null;
   pagination: Pagination;
+  filters: FilterType;
 };
 
 export type Pagination = {

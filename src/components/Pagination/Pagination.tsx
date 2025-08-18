@@ -1,7 +1,10 @@
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import useDevice from "../../hooks/useDevice";
 import { fetchContacts } from "../../redux/contacts/operations";
-import { selectPagination } from "../../redux/contacts/selectors";
+import {
+  selectFilters,
+  selectPagination,
+} from "../../redux/contacts/selectors";
 import CustomButton from "../CustomButton/CustomButton";
 
 const Pagination = () => {
@@ -11,9 +14,10 @@ const Pagination = () => {
 
   const { page, perPage, totalPages, hasNextPage, hasPreviousPage } =
     useAppSelector(selectPagination);
+  const filters = useAppSelector(selectFilters);
 
   const handlePageChange = (newPage: number) => {
-    dispatch(fetchContacts({ page: newPage, perPage }));
+    dispatch(fetchContacts({ page: newPage, perPage, filters }));
   };
 
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);

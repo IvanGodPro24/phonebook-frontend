@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { deleteContact, fetchContacts } from "../../redux/contacts/operations";
 import {
   selectContacts,
+  selectFilters,
   selectPagination,
 } from "../../redux/contacts/selectors";
 import { toast } from "sonner";
@@ -31,6 +32,7 @@ const Contact = ({
 
   const contacts = useAppSelector(selectContacts);
   const { page, perPage } = useAppSelector(selectPagination);
+  const filters = useAppSelector(selectFilters);
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -45,7 +47,9 @@ const Contact = ({
 
       const targetPage = contacts.length === 1 && page > 1 ? page - 1 : page;
 
-      await dispatch(fetchContacts({ page: targetPage, perPage })).unwrap();
+      await dispatch(
+        fetchContacts({ page: targetPage, perPage, filters })
+      ).unwrap();
 
       toast.info("Contact has been deleted!");
     } catch (error: any) {

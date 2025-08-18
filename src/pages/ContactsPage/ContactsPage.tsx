@@ -6,11 +6,16 @@ import SearchBox from "../../components/SearchBox/SearchBox";
 import Loader from "../../components/Loader/Loader";
 import ContactList from "../../components/ContactList/ContactList";
 import { fetchContacts } from "../../redux/contacts/operations";
-import { selectError, selectLoading } from "../../redux/contacts/selectors";
+import {
+  selectError,
+  selectFilters,
+  selectLoading,
+} from "../../redux/contacts/selectors";
 import { selectFilteredContacts } from "../../redux/filters/selectors";
 import ShinyText from "../../components/ShinyText/ShinyText";
 import ScrambledText from "../../components/ScrambledText/ScrambledText";
 import Pagination from "../../components/Pagination/Pagination";
+import FilterForm from "../../components/FilterForm/FilterForm";
 
 const ContactsPage = () => {
   const dispatch = useAppDispatch();
@@ -19,9 +24,10 @@ const ContactsPage = () => {
 
   const loading = useAppSelector(selectLoading);
   const error = useAppSelector(selectError);
+  const filters = useAppSelector(selectFilters);
 
   useEffect(() => {
-    dispatch(fetchContacts({ page: 1, perPage: 10 }));
+    dispatch(fetchContacts({ page: 1, perPage: 10, filters }));
   }, [dispatch]);
 
   return (
@@ -41,6 +47,7 @@ const ContactsPage = () => {
         <div className="flex flex-col justify-center items-center gap-12">
           <ContactForm />
           <SearchBox />
+          <FilterForm />
         </div>
 
         {!loading && contacts.length === 0 ? (

@@ -29,6 +29,13 @@ const initialState: ContactState = {
     hasPreviousPage: false,
     hasNextPage: false,
   },
+  filters: {
+    name: "",
+    phoneNumber: "",
+    email: "",
+    contactType: "",
+    isFavourite: "",
+  },
 };
 
 const slice = createSlice({
@@ -36,7 +43,11 @@ const slice = createSlice({
 
   initialState,
 
-  reducers: {},
+  reducers: {
+    setFilters(state, action: PayloadAction<typeof state.filters>) {
+      state.filters = action.payload;
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -92,5 +103,7 @@ const slice = createSlice({
       }, handlePending);
   },
 });
+
+export const { setFilters } = slice.actions;
 
 export default slice.reducer;
