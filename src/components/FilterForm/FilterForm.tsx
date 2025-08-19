@@ -20,12 +20,7 @@ import { cleanFilters } from "../../utils/cleanFilters";
 const FilterSchema: Yup.ObjectSchema<FilterType> = Yup.object().shape({
   name: Yup.string().max(50, "Too long!").optional(),
   phoneNumber: Yup.string().max(50, "Too long!").optional(),
-  email: Yup.string()
-    .test("email-if-provided", "Invalid email format", (value) => {
-      if (!value || value.trim() === "") return true;
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-    })
-    .optional(),
+  email: Yup.string().max(50, "Too long!").optional(),
   contactType: Yup.string().optional(),
   isFavourite: Yup.boolean().optional(),
 });
@@ -97,7 +92,7 @@ const FilterForm = () => {
             />
 
             <InputField
-              type="email"
+              type="text"
               name="email"
               id={emailId}
               placeholder="Enter your email"
