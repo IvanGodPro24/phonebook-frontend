@@ -7,4 +7,6 @@ export type CustomButtonProps = {
   onClick?: () => void;
   isPage?: boolean;
   isActive?: boolean;
+  isFilter?: boolean;
+  isShowFilter?: boolean;
 };

@@ -68,7 +68,7 @@ const FilterForm = () => {
       validationSchema={FilterSchema}
     >
       {({ resetForm, submitForm, dirty }) => (
-        <SpotlightCard className="mb-10 p-10">
+        <SpotlightCard className="mt-12 p-10">
           <Form className="flex flex-col justify-center items-center gap-2.5">
             <InputField
               type="text"

@@ -6,7 +6,7 @@ const ContactList = () => {
   const contacts = useAppSelector(selectFilteredContacts);
 
   return (
-    <ul className="flex flex-col gap-7.5">
+    <ul className="flex flex-col gap-7.5 mt-12">
       {contacts.map((contact) => (
         <li className="w-2xs sm:w-lg m-auto" key={contact._id}>
           <Contact {...contact} />
