@@ -1,5 +1,5 @@
 import Select, { MultiValue, SingleValue, StylesConfig } from "react-select";
-import { useField } from "formik";
+import { useField, useFormikContext } from "formik";
 import { useId } from "react";
 import { CustomSelectProps, OptionType } from "./CustomSelect.types";
 import { ChevronIcon } from "../ChevronIcon/ChevronIcon";
@@ -79,13 +79,14 @@ const CustomSelect = ({
   isClearable = false,
 }: CustomSelectProps) => {
   const id = useId();
-  const [field, , helpers] = useField(name);
+  const [field] = useField(name);
+  const { setFieldValue } = useFormikContext();
 
   const handleChange = (
     newValue: SingleValue<OptionType> | MultiValue<OptionType>
   ) => {
     const singleValue = newValue as SingleValue<OptionType>;
-    helpers.setValue(singleValue?.value);
+    setFieldValue(name, singleValue ? singleValue.value : "");
   };
 
   return (
@@ -95,7 +96,7 @@ const CustomSelect = ({
         options={options}
         styles={customStyles}
         isSearchable={false}
-        value={options.find((opt) => opt.value === field.value)}
+        value={options.find((opt) => opt.value === field.value) || null}
         onChange={handleChange}
         inputId={id}
         placeholder={placeholder}

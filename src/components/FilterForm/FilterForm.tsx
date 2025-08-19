@@ -67,65 +67,79 @@ const FilterForm = () => {
       onSubmit={handleFilter}
       validationSchema={FilterSchema}
     >
-      <SpotlightCard className="mb-10 p-10">
-        <Form className="flex flex-col justify-center items-center gap-2.5">
-          <InputField
-            type="text"
-            name="name"
-            id={nameId}
-            placeholder="Enter your name"
-            icon={
-              <UserIcon
-                className="absolute top-1/2 left-4 transform -translate-y-1/2 -translate-x-1/2 cursor-pointer"
-                size={24}
-              />
-            }
-          />
+      {({ resetForm, submitForm, dirty }) => (
+        <SpotlightCard className="mb-10 p-10">
+          <Form className="flex flex-col justify-center items-center gap-2.5">
+            <InputField
+              type="text"
+              name="name"
+              id={nameId}
+              placeholder="Enter your name"
+              icon={
+                <UserIcon
+                  className="absolute top-1/2 left-4 transform -translate-y-1/2 -translate-x-1/2 cursor-pointer"
+                  size={24}
+                />
+              }
+            />
 
-          <InputField
-            type="tel"
-            name="phoneNumber"
-            id={numberId}
-            placeholder="Enter your phone number"
-            icon={
-              <EarthIcon
-                className="absolute top-1/2 left-4 transform -translate-y-1/2 -translate-x-1/2 cursor-pointer"
-                size={24}
-              />
-            }
-          />
+            <InputField
+              type="tel"
+              name="phoneNumber"
+              id={numberId}
+              placeholder="Enter your phone number"
+              icon={
+                <EarthIcon
+                  className="absolute top-1/2 left-4 transform -translate-y-1/2 -translate-x-1/2 cursor-pointer"
+                  size={24}
+                />
+              }
+            />
 
-          <InputField
-            type="email"
-            name="email"
-            id={emailId}
-            placeholder="Enter your email"
-            icon={
-              <EmailIcon
-                className="absolute top-1/2 left-4 transform -translate-y-1/2 -translate-x-1/2 cursor-pointer"
-                size={24}
-              />
-            }
-          />
+            <InputField
+              type="email"
+              name="email"
+              id={emailId}
+              placeholder="Enter your email"
+              icon={
+                <EmailIcon
+                  className="absolute top-1/2 left-4 transform -translate-y-1/2 -translate-x-1/2 cursor-pointer"
+                  size={24}
+                />
+              }
+            />
 
-          <CustomSelect
-            name="contactType"
-            options={typeOptions}
-            placeholder="Contact type"
-            isClearable={true}
-          />
+            <CustomSelect
+              name="contactType"
+              options={typeOptions}
+              placeholder="Contact type"
+              isClearable={true}
+            />
 
-          <CustomSelect
-            name="isFavourite"
-            options={favouriteOptions}
-            placeholder="Favourite"
-            isClearable={true}
-          />
+            <CustomSelect
+              name="isFavourite"
+              options={favouriteOptions}
+              placeholder="Favourite"
+              isClearable={true}
+            />
 
-          {/* disabled */}
-          <CustomButton>Apply</CustomButton>
-        </Form>
-      </SpotlightCard>
+            <div className="flex gap-5 mt-5">
+              <CustomButton disabled={!dirty}>Apply</CustomButton>
+
+              <CustomButton
+                type="button"
+                disabled={!dirty}
+                onClick={() => {
+                  resetForm();
+                  submitForm();
+                }}
+              >
+                Reset
+              </CustomButton>
+            </div>
+          </Form>
+        </SpotlightCard>
+      )}
     </Formik>
   );
 };
