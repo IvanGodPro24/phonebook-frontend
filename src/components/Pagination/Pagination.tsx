@@ -4,7 +4,10 @@ import { fetchContacts } from "../../redux/contacts/operations";
 import {
   selectFilters,
   selectPagination,
+  selectSortBy,
+  selectSortOrder,
 } from "../../redux/contacts/selectors";
+import { cleanFilters } from "../../utils/cleanFilters";
 import CustomButton from "../CustomButton/CustomButton";
 
 const Pagination = () => {
@@ -14,10 +17,22 @@ const Pagination = () => {
 
   const { page, perPage, totalPages, hasNextPage, hasPreviousPage } =
     useAppSelector(selectPagination);
+  const sortOrder = useAppSelector(selectSortOrder);
+  const sortBy = useAppSelector(selectSortBy);
   const filters = useAppSelector(selectFilters);
 
+  const cleanedFilters = cleanFilters(filters);
+
   const handlePageChange = (newPage: number) => {
-    dispatch(fetchContacts({ page: newPage, perPage, filters }));
+    dispatch(
+      fetchContacts({
+        page: newPage,
+        perPage,
+        sortBy,
+        sortOrder,
+        filters: cleanedFilters,
+      })
+    );
   };
 
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);

@@ -8,6 +8,8 @@ import {
   selectContacts,
   selectFilters,
   selectPagination,
+  selectSortBy,
+  selectSortOrder,
 } from "../../redux/contacts/selectors";
 import { toast } from "sonner";
 import { useState } from "react";
@@ -18,6 +20,7 @@ import Modal from "../Modal/Modal";
 import CustomButton from "../CustomButton/CustomButton";
 import SpotlightCard from "../SpotlightCard/SpotlightCard";
 import ContactEditForm from "../ContactEditForm/ContactEditForm";
+import { cleanFilters } from "../../utils/cleanFilters";
 
 const Contact = ({
   _id,
@@ -32,6 +35,8 @@ const Contact = ({
 
   const contacts = useAppSelector(selectContacts);
   const { page, perPage } = useAppSelector(selectPagination);
+  const sortOrder = useAppSelector(selectSortOrder);
+  const sortBy = useAppSelector(selectSortBy);
   const filters = useAppSelector(selectFilters);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -47,8 +52,16 @@ const Contact = ({
 
       const targetPage = contacts.length === 1 && page > 1 ? page - 1 : page;
 
+      const cleanedFilters = cleanFilters(filters);
+
       await dispatch(
-        fetchContacts({ page: targetPage, perPage, filters })
+        fetchContacts({
+          page: targetPage,
+          perPage,
+          sortBy,
+          sortOrder,
+          filters: cleanedFilters,
+        })
       ).unwrap();
 
       toast.info("Contact has been deleted!");

@@ -9,6 +9,8 @@ import {
   selectContacts,
   selectFilters,
   selectPagination,
+  selectSortBy,
+  selectSortOrder,
 } from "../../redux/contacts/selectors";
 import { ContactFormProps } from "./ContactForm.types";
 import { existedContact } from "../../utils/contactUtils";
@@ -22,6 +24,7 @@ import { EmailIcon } from "../EmailIcon/EmailIcon";
 import { typeOptions } from "../../constants/constants";
 import InputField from "../InputField/InputField";
 import CustomCheckbox from "../CustomCheckbox/CustomCheckbox";
+import { cleanFilters } from "../../utils/cleanFilters";
 
 const ContactSchema: Yup.ObjectSchema<ContactFormProps> = Yup.object().shape({
   name: Yup.string()
@@ -55,6 +58,8 @@ const ContactForm = () => {
 
   const contacts = useAppSelector(selectContacts);
   const { page, totalItems, perPage } = useAppSelector(selectPagination);
+  const sortOrder = useAppSelector(selectSortOrder);
+  const sortBy = useAppSelector(selectSortBy);
   const filters = useAppSelector(selectFilters);
 
   const nameId = useId();
@@ -100,8 +105,16 @@ const ContactForm = () => {
         targetPage = newTotalPages;
       }
 
+      const cleanedFilters = cleanFilters(filters);
+
       await dispatch(
-        fetchContacts({ page: targetPage, perPage, filters })
+        fetchContacts({
+          page: targetPage,
+          perPage,
+          sortBy,
+          sortOrder,
+          filters: cleanedFilters,
+        })
       ).unwrap();
 
       toast.success("Contact has been added!");

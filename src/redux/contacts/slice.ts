@@ -29,6 +29,8 @@ const initialState: ContactState = {
     hasPreviousPage: false,
     hasNextPage: false,
   },
+  sortBy: null,
+  sortOrder: null,
   filters: {
     name: "",
     phoneNumber: "",
@@ -44,6 +46,12 @@ const slice = createSlice({
   initialState,
 
   reducers: {
+    setSortBy(state, action: PayloadAction<string>) {
+      state.sortBy = action.payload;
+    },
+    setSortOrder(state, action: PayloadAction<"asc" | "desc" | null>) {
+      state.sortOrder = action.payload;
+    },
     setFilters(state, action: PayloadAction<typeof state.filters>) {
       state.filters = action.payload;
     },
@@ -104,6 +112,6 @@ const slice = createSlice({
   },
 });
 
-export const { setFilters } = slice.actions;
+export const { setFilters, setSortBy, setSortOrder } = slice.actions;
 
 export default slice.reducer;

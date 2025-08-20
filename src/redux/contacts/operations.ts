@@ -14,10 +14,13 @@ export const fetchContacts = createAsyncThunk<
   { rejectValue: string }
 >(
   "contacts/fetchAll",
-  async ({ page = 1, perPage = 10, filters = {} }, { rejectWithValue }) => {
+  async (
+    { page = 1, perPage = 10, sortOrder, sortBy, filters = {} },
+    { rejectWithValue }
+  ) => {
     try {
       const response = await axios.get("/contacts", {
-        params: { page, perPage, ...filters },
+        params: { page, perPage, sortOrder, sortBy, ...filters },
       });
 
       return response.data;

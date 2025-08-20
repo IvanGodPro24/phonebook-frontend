@@ -23,6 +23,8 @@ export type ContactData = {
 export type FetchContacts = {
   page: number;
   perPage: number;
+  sortBy: string | null;
+  sortOrder: "asc" | "desc" | null;
   filters: FilterType;
 };
 
@@ -61,6 +63,8 @@ export type ContactState = {
   loading: boolean;
   error: string | null;
   pagination: Pagination;
+  sortBy: string | null;
+  sortOrder: "asc" | "desc" | null;
   filters: FilterType;
 };
 

@@ -14,7 +14,7 @@ import { favouriteOptions, typeOptions } from "../../constants/constants";
 import { FilterType } from "./FilterForm.types";
 import SpotlightCard from "../SpotlightCard/SpotlightCard";
 import { setFilters } from "../../redux/contacts/slice";
-import { selectPagination } from "../../redux/contacts/selectors";
+import { selectPagination, selectSortBy, selectSortOrder } from "../../redux/contacts/selectors";
 import { cleanFilters } from "../../utils/cleanFilters";
 
 const FilterSchema: Yup.ObjectSchema<FilterType> = Yup.object().shape({
@@ -41,6 +41,8 @@ const FilterForm = () => {
   const emailId = useId();
 
   const { perPage } = useAppSelector(selectPagination);
+  const sortOrder = useAppSelector(selectSortOrder);
+  const sortBy = useAppSelector(selectSortBy);
 
   const handleFilter = async (filters: FilterType) => {
     try {
@@ -49,7 +51,13 @@ const FilterForm = () => {
       dispatch(setFilters(cleanedFilters));
 
       await dispatch(
-        fetchContacts({ page: 1, perPage, filters: cleanedFilters })
+        fetchContacts({
+          page: 1,
+          perPage,
+          sortBy,
+          sortOrder,
+          filters: cleanedFilters,
+        })
       ).unwrap();
     } catch (error: any) {
       toast.error(error);

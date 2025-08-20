@@ -18,6 +18,8 @@ import Pagination from "../../components/Pagination/Pagination";
 import FilterForm from "../../components/FilterForm/FilterForm";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import { motion, AnimatePresence } from "framer-motion";
+import { cleanFilters } from "../../utils/cleanFilters";
+import SortGroup from "../../components/SortGroup/SortGroup";
 
 const ContactsPage = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +28,8 @@ const ContactsPage = () => {
 
   const loading = useAppSelector(selectLoading);
   const error = useAppSelector(selectError);
+  const sortBy = useAppSelector((state) => state.contacts.sortBy);
+  const sortOrder = useAppSelector((state) => state.contacts.sortOrder);
   const filters = useAppSelector(selectFilters);
 
   const [isShowFilter, setIsShowFilter] = useState(false);
@@ -33,8 +37,18 @@ const ContactsPage = () => {
   const handleShowFilter = () => setIsShowFilter((prev) => !prev);
 
   useEffect(() => {
-    dispatch(fetchContacts({ page: 1, perPage: 10, filters }));
-  }, [dispatch]);
+    const cleanedFilters = cleanFilters(filters);
+
+    dispatch(
+      fetchContacts({
+        page: 1,
+        perPage: 10,
+        sortBy,
+        sortOrder,
+        filters: cleanedFilters,
+      })
+    );
+  }, [dispatch, filters, sortBy, sortOrder]);
 
   return (
     <>
@@ -78,6 +92,8 @@ const ContactsPage = () => {
             )}
           </AnimatePresence>
         </div>
+
+        <SortGroup />
 
         {!loading && contacts.length === 0 ? (
           <ScrambledText

@@ -6,7 +6,7 @@ import { ChevronIcon } from "../ChevronIcon/ChevronIcon";
 import { WorkflowIcon } from "../WorkflowIcon/WorkflowIcon";
 import { XIcon } from "../XIcon/XIcon";
 
-const customStyles: StylesConfig<OptionType> = {
+export const customStyles: StylesConfig<OptionType> = {
   control: (provided) => ({
     ...provided,
     backgroundColor: "rgba(255, 255, 255, 0.05)",

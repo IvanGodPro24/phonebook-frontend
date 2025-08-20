@@ -10,3 +10,16 @@ export const favouriteOptions: BooleanOptions[] = [
   { value: true, label: "Favourite" },
   { value: false, label: "Not a favourite" },
 ];
+
+export const sortOptions: StringOptions[] = [
+  { value: "name", label: "Name" },
+  { value: "email", label: "Email" },
+  { value: "phoneNumber", label: "Phone Number" },
+  { value: "isFavourite", label: "Is Favourite" },
+  { value: "contactType", label: "Contact Type" },
+];
+
+export const orderOptions: StringOptions[] = [
+  { value: "asc", label: "Ascending" },
+  { value: "desc", label: "Descending" },
+];

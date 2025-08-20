@@ -9,3 +9,7 @@ export const selectError = (state: RootState) => state.contacts.error;
 export const selectPagination = (state: RootState) => state.contacts.pagination;
 
 export const selectFilters = (state: RootState) => state.contacts.filters;
+
+export const selectSortBy = (state: RootState) => state.contacts.sortBy;
+
+export const selectSortOrder = (state: RootState) => state.contacts.sortOrder;
