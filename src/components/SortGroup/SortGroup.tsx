@@ -9,9 +9,8 @@ const SortGroup = () => {
   const sortOrder = useAppSelector(selectSortOrder);
   const sortBy = useAppSelector(selectSortBy);
 
-  const handleSortBy = (value: string | number | boolean) => {
+  const handleSortBy = (value: string | number | boolean) =>
     dispatch(setSortBy(String(value)));
-  };
 
   const handleSortOrder = (value: string | number | boolean) => {
     value === "asc" || value === "desc"

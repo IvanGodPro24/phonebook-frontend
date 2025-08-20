@@ -1,4 +1,8 @@
-import { BooleanOptions, StringOptions } from "./constants.types";
+import {
+  BooleanOptions,
+  NumberOptions,
+  StringOptions,
+} from "./constants.types";
 
 export const typeOptions: StringOptions[] = [
   { value: "work", label: "Work" },
@@ -22,4 +26,12 @@ export const sortOptions: StringOptions[] = [
 export const orderOptions: StringOptions[] = [
   { value: "asc", label: "Ascending" },
   { value: "desc", label: "Descending" },
+];
+
+export const perPageOptions: NumberOptions[] = [
+  { value: 10, label: "10" },
+  { value: 20, label: "20" },
+  { value: 30, label: "30" },
+  { value: 40, label: "40" },
+  { value: 50, label: "50" },
 ];

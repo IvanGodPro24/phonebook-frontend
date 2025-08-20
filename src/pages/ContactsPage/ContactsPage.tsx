@@ -10,6 +10,7 @@ import {
   selectError,
   selectFilters,
   selectLoading,
+  selectPagination,
 } from "../../redux/contacts/selectors";
 import { selectFilteredContacts } from "../../redux/filters/selectors";
 import ShinyText from "../../components/ShinyText/ShinyText";
@@ -20,6 +21,7 @@ import CustomButton from "../../components/CustomButton/CustomButton";
 import { motion, AnimatePresence } from "framer-motion";
 import { cleanFilters } from "../../utils/cleanFilters";
 import SortGroup from "../../components/SortGroup/SortGroup";
+import PerPage from "../../components/PerPage/PerPage";
 
 const ContactsPage = () => {
   const dispatch = useAppDispatch();
@@ -28,6 +30,7 @@ const ContactsPage = () => {
 
   const loading = useAppSelector(selectLoading);
   const error = useAppSelector(selectError);
+  const { page, perPage } = useAppSelector(selectPagination);
   const sortBy = useAppSelector((state) => state.contacts.sortBy);
   const sortOrder = useAppSelector((state) => state.contacts.sortOrder);
   const filters = useAppSelector(selectFilters);
@@ -41,14 +44,14 @@ const ContactsPage = () => {
 
     dispatch(
       fetchContacts({
-        page: 1,
-        perPage: 10,
+        page,
+        perPage,
         sortBy,
         sortOrder,
         filters: cleanedFilters,
       })
     );
-  }, [dispatch, filters, sortBy, sortOrder]);
+  }, [dispatch, perPage, filters, sortBy, sortOrder]);
 
   return (
     <>
@@ -94,6 +97,8 @@ const ContactsPage = () => {
         </div>
 
         <SortGroup />
+
+        <PerPage />
 
         {!loading && contacts.length === 0 ? (
           <ScrambledText

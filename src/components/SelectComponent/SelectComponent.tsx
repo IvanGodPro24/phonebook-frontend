@@ -1,4 +1,5 @@
 import Select, { MultiValue, SingleValue } from "react-select";
+import clsx from "clsx";
 import { useId } from "react";
 import { OptionType } from "../CustomSelect/CustomSelect.types";
 import { SelectComponentProps } from "./SelectComponent.types";
@@ -25,7 +26,10 @@ const SelectComponent = ({
   };
 
   return (
-    <label htmlFor={id} className="relative w-2xs">
+    <label
+      htmlFor={id}
+      className={clsx("relative w-2xs", name === "perPage" && "w-[100px]")}
+    >
       <Select
         name={name}
         options={options}
