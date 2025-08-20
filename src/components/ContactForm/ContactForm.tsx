@@ -28,11 +28,11 @@ import { cleanFilters } from "../../utils/cleanFilters";
 const ContactSchema: Yup.ObjectSchema<ContactFormProps> = Yup.object().shape({
   name: Yup.string()
     .min(3, "Too short!")
-    .max(50, "Too long!")
+    .max(20, "Too long!")
     .required("Required!"),
   phoneNumber: Yup.string()
     .min(3, "Too short!")
-    .max(50, "Too long!")
+    .max(20, "Too long!")
     .required("Required!"),
   email: Yup.string()
     .optional()

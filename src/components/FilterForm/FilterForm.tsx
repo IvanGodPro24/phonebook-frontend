@@ -16,9 +16,9 @@ import { setFilters } from "../../redux/contacts/slice";
 import { cleanFilters } from "../../utils/cleanFilters";
 
 const FilterSchema: Yup.ObjectSchema<FilterType> = Yup.object().shape({
-  name: Yup.string().max(50, "Too long!").optional(),
-  phoneNumber: Yup.string().max(50, "Too long!").optional(),
-  email: Yup.string().max(50, "Too long!").optional(),
+  name: Yup.string().max(20, "Too long!").optional(),
+  phoneNumber: Yup.string().max(20, "Too long!").optional(),
+  email: Yup.string().max(20, "Too long!").optional(),
   contactType: Yup.string().optional(),
   isFavourite: Yup.boolean().optional(),
 });

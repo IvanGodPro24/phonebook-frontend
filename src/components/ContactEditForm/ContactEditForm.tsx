@@ -23,11 +23,11 @@ const ContactSchema: Yup.ObjectSchema<ContactEditFormState> =
   Yup.object().shape({
     editName: Yup.string()
       .min(3, "Too short!")
-      .max(50, "Too long!")
+      .max(20, "Too long!")
       .required("Required!"),
     editTel: Yup.string()
       .min(3, "Too short!")
-      .max(50, "Too long!")
+      .max(20, "Too long!")
       .required("Required!"),
     editEmail: Yup.string()
       .nullable()

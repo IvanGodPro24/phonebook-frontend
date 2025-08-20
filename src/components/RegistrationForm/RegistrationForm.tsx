@@ -11,12 +11,12 @@ const registrationSchema: Yup.ObjectSchema<RegisterCredentials> =
   Yup.object().shape({
     name: Yup.string()
       .min(3, "Too short!")
-      .max(50, "Too long!")
+      .max(30, "Too long!")
       .required("Required!"),
     email: Yup.string().email("Must be a valid email!").required("Required"),
     password: Yup.string()
       .min(8, "Too short!")
-      .max(50, "Too long!")
+      .max(20, "Too long!")
       .required("Required!"),
   });
 
