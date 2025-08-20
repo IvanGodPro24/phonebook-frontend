@@ -47,6 +47,7 @@ const slice = createSlice({
 
   reducers: {
     setPerPage(state, action: PayloadAction<number>) {
+      state.pagination.page = 1;
       state.pagination.perPage = action.payload;
     },
     setSortBy(state, action: PayloadAction<string>) {
