@@ -51,12 +51,15 @@ const slice = createSlice({
       state.pagination.perPage = action.payload;
     },
     setSortBy(state, action: PayloadAction<string>) {
+      state.pagination.page = 1;
       state.sortBy = action.payload;
     },
     setSortOrder(state, action: PayloadAction<"asc" | "desc" | null>) {
+      state.pagination.page = 1;
       state.sortOrder = action.payload;
     },
     setFilters(state, action: PayloadAction<typeof state.filters>) {
+      state.pagination.page = 1;
       state.filters = action.payload;
     },
   },

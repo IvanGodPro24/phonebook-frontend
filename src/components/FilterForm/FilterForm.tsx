@@ -1,8 +1,7 @@
 import { useId } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchContacts } from "../../redux/contacts/operations";
+import { useAppDispatch } from "../../hooks/hooks";
 import { toast } from "sonner";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomSelect from "../CustomSelect/CustomSelect";
@@ -14,7 +13,6 @@ import { favouriteOptions, typeOptions } from "../../constants/constants";
 import { FilterType } from "./FilterForm.types";
 import SpotlightCard from "../SpotlightCard/SpotlightCard";
 import { setFilters } from "../../redux/contacts/slice";
-import { selectPagination, selectSortBy, selectSortOrder } from "../../redux/contacts/selectors";
 import { cleanFilters } from "../../utils/cleanFilters";
 
 const FilterSchema: Yup.ObjectSchema<FilterType> = Yup.object().shape({
@@ -40,25 +38,11 @@ const FilterForm = () => {
   const numberId = useId();
   const emailId = useId();
 
-  const { perPage } = useAppSelector(selectPagination);
-  const sortOrder = useAppSelector(selectSortOrder);
-  const sortBy = useAppSelector(selectSortBy);
-
   const handleFilter = async (filters: FilterType) => {
     try {
       const cleanedFilters = cleanFilters(filters);
 
       dispatch(setFilters(cleanedFilters));
-
-      await dispatch(
-        fetchContacts({
-          page: 1,
-          perPage,
-          sortBy,
-          sortOrder,
-          filters: cleanedFilters,
-        })
-      ).unwrap();
     } catch (error: any) {
       toast.error(error);
     }
