@@ -127,9 +127,9 @@ const Contact = ({
               </div>
 
               {email && (
-                <div className="flex items-center gap-2.5">
-                  <MdEmail />
-                  <p>{email}</p>
+                <div className="flex items-center gap-2.5 max-w-[250px]">
+                  <MdEmail size={16} />
+                  <p className="truncate">{email}</p>
                 </div>
               )}
 
