@@ -13,7 +13,6 @@ import {
   selectSortOrder,
 } from "../../redux/contacts/selectors";
 import { ContactFormProps } from "./ContactForm.types";
-import { existedContact } from "../../utils/contactUtils";
 import CustomLoader from "../CustomLoader/CustomLoader";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomSelect from "../CustomSelect/CustomSelect";
@@ -81,11 +80,6 @@ const ContactForm = () => {
     { setSubmitting, resetForm }: FormikHelpers<ContactFormProps>
   ) => {
     try {
-      if (existedContact(contacts, name, phoneNumber, email)) {
-        toast.info("Contact already exists.");
-        return;
-      }
-
       await dispatch(
         addContact({
           name,

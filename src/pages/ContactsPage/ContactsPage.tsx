@@ -7,7 +7,6 @@ import Loader from "../../components/Loader/Loader";
 import ContactList from "../../components/ContactList/ContactList";
 import { fetchContacts } from "../../redux/contacts/operations";
 import {
-  selectError,
   selectFilters,
   selectLoading,
   selectPagination,
@@ -29,7 +28,6 @@ const ContactsPage = () => {
   const contacts = useAppSelector(selectFilteredContacts);
 
   const loading = useAppSelector(selectLoading);
-  const error = useAppSelector(selectError);
   const { page, perPage } = useAppSelector(selectPagination);
   const sortBy = useAppSelector((state) => state.contacts.sortBy);
   const sortOrder = useAppSelector((state) => state.contacts.sortOrder);
@@ -114,7 +112,6 @@ const ContactsPage = () => {
         ) : (
           <>
             {loading ? <Loader /> : <ContactList />}
-            {error && <p className="mt-5 mb-5">{error}</p>}
             <Pagination />
           </>
         )}

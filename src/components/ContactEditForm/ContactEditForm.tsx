@@ -1,11 +1,9 @@
 import { ChangeEvent, useId, useRef, useState } from "react";
 import * as Yup from "yup";
 import { Form, Formik, FormikHelpers } from "formik";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch } from "../../hooks/hooks";
 import { editContact } from "../../redux/contacts/operations";
 import { toast } from "sonner";
-import { selectContacts } from "../../redux/contacts/selectors";
-import { existedContact } from "../../utils/contactUtils";
 import CustomLoader from "../CustomLoader/CustomLoader";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomSelect from "../CustomSelect/CustomSelect";
@@ -61,8 +59,6 @@ const ContactEditForm = ({
 
   const dispatch = useAppDispatch();
 
-  const contacts = useAppSelector(selectContacts);
-
   const nameId = useId();
   const numberId = useId();
   const emailId = useId();
@@ -101,11 +97,6 @@ const ContactEditForm = ({
         !removePhoto
       ) {
         setIsEditing(false);
-        return;
-      }
-
-      if (existedContact(contacts, editName, editTel, editEmail || "", _id)) {
-        toast.info("Another contact with the same data already exists.");
         return;
       }
 
