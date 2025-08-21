@@ -4,6 +4,8 @@ import {
   AuthState,
   LoginCredentials,
   RegisterCredentials,
+  ResetPasswordType,
+  Response,
   User,
 } from "./auth.types";
 
@@ -72,6 +74,34 @@ export const refresh = createAsyncThunk<
     const response = await axios.post("/auth/refresh");
 
     setAuthHeader(response.data.accessToken);
+
+    return response.data;
+  } catch (error: any) {
+    return rejectWithValue(error.response?.data?.data || error.message);
+  }
+});
+
+export const requestResetEmail = createAsyncThunk<
+  Response,
+  string,
+  { rejectValue: string }
+>("auth/requestResetEmail", async (email, { rejectWithValue }) => {
+  try {
+    const response = await axios.post("/auth/send-reset-email", { email });
+
+    return response.data;
+  } catch (error: any) {
+    return rejectWithValue(error.response?.data?.data || error.message);
+  }
+});
+
+export const resetPassword = createAsyncThunk<
+  Response,
+  ResetPasswordType,
+  { rejectValue: string }
+>("auth/resetPassword", async ({ token, password }, { rejectWithValue }) => {
+  try {
+    const response = await axios.post("/auth/reset-pwd", { token, password });
 
     return response.data;
   } catch (error: any) {

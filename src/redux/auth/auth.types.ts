@@ -25,3 +25,12 @@ export type LoginCredentials = {
   email: string;
   password: string;
 };
+
+export type ResetPasswordType = {
+  token: string;
+  password: string;
+};
+
+export type Response = {
+  message: string;
+};

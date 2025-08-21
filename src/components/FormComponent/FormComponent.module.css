@@ -60,12 +60,20 @@
   min-height: 601px;
 }
 
+.reset-container {
+  min-height: 301px;
+}
+
 .c-container-photo {
   min-height: 701px;
 }
 
 .c-box {
   min-height: 600px;
+}
+
+.reset-box {
+  min-height: 300px;
 }
 
 .c-box-photo {

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { login, logout, refresh, register } from "./operations";
+import { login, logout, refresh } from "./operations";
 import { AuthInitState, AuthState } from "./auth.types";
 import { toast } from "sonner";
 

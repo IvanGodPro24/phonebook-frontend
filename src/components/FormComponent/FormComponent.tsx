@@ -16,6 +16,7 @@ const FormComponent = ({
   isSubmitting,
   children,
   isAuth = false,
+  isReset = false,
   photo,
 }: FormComponentProps) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -28,12 +29,14 @@ const FormComponent = ({
     <div
       className={clsx(css.container, {
         [css["c-container"]]: children,
+        [css["reset-container"]]: isReset,
         [css["c-container-photo"]]: photo,
       })}
     >
       <div
         className={clsx(css["login-box"], {
           [css["c-box"]]: children,
+          [css["reset-box"]]: isReset,
           [css["c-box-photo"]]: photo,
         })}
       >
@@ -124,7 +127,7 @@ const FormComponent = ({
                 </div>
 
                 {isLogIn && (
-                  <Link to="/" className={css.link}>
+                  <Link to="/request-reset" className={css.link}>
                     Forgot password?
                   </Link>
                 )}

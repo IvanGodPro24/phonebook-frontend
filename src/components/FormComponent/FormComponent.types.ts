@@ -5,5 +5,6 @@ export type FormComponentProps = {
   isSubmitting?: boolean;
   children?: ReactNode;
   isAuth?: boolean;
+  isReset?: boolean;
   photo?: File | null;
 };

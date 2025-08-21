@@ -9,6 +9,9 @@ import RestrictedRoute from "./RestrictedRoute";
 import PrivateRoute from "./PrivateRoute";
 import { selectIsRefreshing } from "./redux/auth/selectors";
 import { refresh } from "./redux/auth/operations";
+import RequestPage from "./pages/RequestPage/RequestPage";
+import CheckEmailPage from "./pages/CheckEmailPage/CheckEmailPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
 
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
 const RegistrationPage = lazy(
@@ -40,6 +43,10 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/register" element={<RegistrationPage />} />
+            <Route path="/request-reset" element={<RequestPage />} />
+            <Route path="/check-email" element={<CheckEmailPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
+
             <Route
               path="/login"
               element={
