@@ -10,6 +10,9 @@ import { FormComponentProps } from "./FormComponent.types";
 import { UserIcon } from "../UserIcon/UserIcon";
 import { EmailIcon } from "../EmailIcon/EmailIcon";
 import { PasswordIcon } from "../PasswordIcon/PasswordIcon";
+import { useAppDispatch } from "../../hooks/hooks";
+import { getGoogleAuthUrl } from "../../redux/auth/operations";
+import { toast } from "sonner";
 
 const FormComponent = ({
   isLogIn = false,
@@ -19,6 +22,18 @@ const FormComponent = ({
   isReset = false,
   photo,
 }: FormComponentProps) => {
+  const dispatch = useAppDispatch();
+
+  const handleGoogleLogin = async () => {
+    try {
+      const url = await dispatch(getGoogleAuthUrl()).unwrap();
+
+      window.location.href = url;
+    } catch (error) {
+      toast.error("Failed to start Google OAuth");
+    }
+  };
+
   const [isVisible, setIsVisible] = useState(false);
 
   const nameId = useId();
@@ -107,7 +122,11 @@ const FormComponent = ({
               )}
 
               {isLogIn && (
-                <button className={clsx(css.button, css["google-sign-in"])}>
+                <button
+                  type="button"
+                  onClick={handleGoogleLogin}
+                  className={clsx(css.button, css["google-sign-in"])}
+                >
                   <GoogleIcon />
                   <span>Sign in with Google </span>
                 </button>

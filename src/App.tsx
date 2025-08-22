@@ -12,6 +12,7 @@ import { refresh } from "./redux/auth/operations";
 import RequestPage from "./pages/RequestPage/RequestPage";
 import CheckEmailPage from "./pages/CheckEmailPage/CheckEmailPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
+import GoogleCallbackPage from "./pages/GoogleCallbackPage/GoogleCallbackPage";
 
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
 const RegistrationPage = lazy(
@@ -46,6 +47,10 @@ function App() {
             <Route path="/request-reset" element={<RequestPage />} />
             <Route path="/check-email" element={<CheckEmailPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route
+              path="/confirm-google-auth"
+              element={<GoogleCallbackPage />}
+            />
 
             <Route
               path="/login"

@@ -26,9 +26,9 @@ export const register = createAsyncThunk<
   { rejectValue: string }
 >("auth/register", async (user, { rejectWithValue }) => {
   try {
-    const response = await axios.post("/auth/register", user);
+    const { data } = await axios.post("/auth/register", user);
 
-    return response.data;
+    return data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.data || error.message);
   }
@@ -40,12 +40,12 @@ export const login = createAsyncThunk<
   { rejectValue: string }
 >("auth/login", async (user, { rejectWithValue }) => {
   try {
-    const response = await axios.post("/auth/login", user);
+    const { data } = await axios.post("/auth/login", user);
 
     localStorage.setItem("hasSession", "true");
-    setAuthHeader(response.data.accessToken);
+    setAuthHeader(data.accessToken);
 
-    return response.data;
+    return data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.data || error.message);
   }
@@ -71,11 +71,11 @@ export const refresh = createAsyncThunk<
   { rejectValue: string }
 >("auth/refresh", async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.post("/auth/refresh");
+    const { data } = await axios.post("/auth/refresh");
 
-    setAuthHeader(response.data.accessToken);
+    setAuthHeader(data.accessToken);
 
-    return response.data;
+    return data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.data || error.message);
   }
@@ -87,9 +87,9 @@ export const requestResetEmail = createAsyncThunk<
   { rejectValue: string }
 >("auth/requestResetEmail", async (email, { rejectWithValue }) => {
   try {
-    const response = await axios.post("/auth/send-reset-email", { email });
+    const { data } = await axios.post("/auth/send-reset-email", { email });
 
-    return response.data;
+    return data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.data || error.message);
   }
@@ -101,9 +101,40 @@ export const resetPassword = createAsyncThunk<
   { rejectValue: string }
 >("auth/resetPassword", async ({ token, password }, { rejectWithValue }) => {
   try {
-    const response = await axios.post("/auth/reset-pwd", { token, password });
+    const { data } = await axios.post("/auth/reset-pwd", { token, password });
 
-    return response.data;
+    return data;
+  } catch (error: any) {
+    return rejectWithValue(error.response?.data?.data || error.message);
+  }
+});
+
+export const getGoogleAuthUrl = createAsyncThunk<
+  string,
+  void,
+  { rejectValue: string }
+>("auth/getGoogleAuthUrl", async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.get("/auth/get-oauth-url");
+
+    return data.url;
+  } catch (error: any) {
+    return rejectWithValue(error.response?.data?.data || error.message);
+  }
+});
+
+export const loginWithGoogle = createAsyncThunk<
+  AuthState,
+  string,
+  { rejectValue: string }
+>("auth/loginWithGoogle", async (code, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post("/auth/confirm-oauth", { code });
+
+    localStorage.setItem("hasSession", "true");
+    setAuthHeader(data.accessToken);
+
+    return data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.data || error.message);
   }

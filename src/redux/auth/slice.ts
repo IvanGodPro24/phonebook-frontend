@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { login, logout, refresh } from "./operations";
+import { login, loginWithGoogle, logout, refresh } from "./operations";
 import { AuthInitState, AuthState } from "./auth.types";
 import { toast } from "sonner";
 
@@ -50,6 +50,10 @@ const slice = createSlice({
       .addCase(refresh.rejected, (state) => {
         state.isRefreshing = false;
         toast.error("Session not found, please log in again");
+      })
+      .addCase(loginWithGoogle.fulfilled, handleAuthentication)
+      .addCase(loginWithGoogle.rejected, (_, action) => {
+        toast.error(action.payload || "Google login failed");
       });
   },
 });
