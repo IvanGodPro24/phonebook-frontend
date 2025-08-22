@@ -5,7 +5,7 @@ import ScrambledText from "../../components/ScrambledText/ScrambledText";
 const NotFoundPage = () => {
   return (
     <div className="flex justify-center items-center min-h-screen p-8">
-      <div className="flex flex-col items-center min-w-[80%] p-12 rounded-2xl bg-white/5 shadow-2xl border border-[var(--white-400)]">
+      <div className="flex flex-col items-center min-w-[80%] p-9 rounded-2xl bg-white/5 shadow-2xl border border-[var(--white-400)]">
         <VscBracketError size={120} className="mb-6" />
 
         <ScrambledText
