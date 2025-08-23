@@ -68,7 +68,7 @@ npm run dev
 > Base URL (Render deployment):
 
 ````
-[https://phonebook-backend-n8t6.onrender.com](https://phonebook-backend-n8t6.onrender.com)
+https://phonebook-backend-n8t6.onrender.com
 ````
 
 ## 📁 Project Structure
