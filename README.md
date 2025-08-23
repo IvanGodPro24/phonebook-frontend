@@ -43,14 +43,21 @@ User-friendly contact book that allows users to store, edit, delete, and filter 
 
 ```bash
 git clone https://github.com/IvanGodPro24/phonebook-frontend.git
+```
+
+2. Navigate to the project directory:
+
+```bash
 cd phonebook-frontend
+```
 
-2. Install dependencies:
+3. Install dependencies:
 
-````bash
+```bash
 npm install
+```
 
-3. Run the project:
+4. Run the project:
 
 ```bash
 npm run dev
@@ -61,8 +68,8 @@ npm run dev
 > Base URL (Render deployment):
 
 ````
-
 [https://phonebook-backend-n8t6.onrender.com](https://phonebook-backend-n8t6.onrender.com)
+````
 
 ## 📁 Project Structure
 
