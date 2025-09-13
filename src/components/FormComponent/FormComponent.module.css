@@ -13,7 +13,7 @@
   border-radius: 24px;
   width: calc(var(--form-width) + 1px);
   height: calc(var(--form-width) * var(--aspect-ratio) + 1px);
-  min-height: 466px;
+  min-height: 486px;
   z-index: 8;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.2),
     0 0 8px rgba(255, 255, 255, 0.1), 0 0 16px rgba(255, 255, 255, 0.08);
@@ -45,7 +45,7 @@
   padding: 28px;
   width: var(--form-width);
   height: calc(var(--form-width) * var(--aspect-ratio));
-  min-height: 465px;
+  min-height: 485px;
 
   position: absolute;
   z-index: 10;

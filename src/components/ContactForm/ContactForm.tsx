@@ -31,8 +31,7 @@ const ContactSchema: Yup.ObjectSchema<ContactFormProps> = Yup.object().shape({
     .max(20, "Too long!")
     .required("Required!"),
   phoneNumber: Yup.string()
-    .min(3, "Too short!")
-    .max(20, "Too long!")
+    .matches(/^0\d{9}$/, "Phone number must be 10 digits and start with 0")
     .required("Required!"),
   email: Yup.string()
     .optional()

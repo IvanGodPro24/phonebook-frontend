@@ -121,16 +121,16 @@ const FormComponent = ({
                 </button>
               )}
 
-              {isLogIn && (
-                <button
-                  type="button"
-                  onClick={handleGoogleLogin}
-                  className={clsx(css.button, css["google-sign-in"])}
-                >
-                  <GoogleIcon />
-                  <span>Sign in with Google </span>
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={handleGoogleLogin}
+                className={clsx(css.button, css["google-sign-in"])}
+              >
+                <GoogleIcon />
+                <span>
+                  {isLogIn ? "Sign in with Google" : "Sign up with Google"}
+                </span>
+              </button>
 
               <div className={css.footer}>
                 <div className={css["footer-container"]}>

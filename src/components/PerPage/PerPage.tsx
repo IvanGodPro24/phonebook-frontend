@@ -14,6 +14,7 @@ const PerPage = () => {
 
   return (
     <div className="flex flex-col justify-center items-center gap-4 mt-12">
+      <p className="text-gray-700 font-semibold text-sm">Items per page</p>
       <SelectComponent
         name="perPage"
         options={perPageOptions}
